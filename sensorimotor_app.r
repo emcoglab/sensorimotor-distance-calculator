@@ -1,5 +1,8 @@
-
 library(shiny)
+
+norms <- read.csv("/Users/cai/Box Sync/LANGBOOT Project/Model/FINAL_sensorimotor_norms_for_39707_words.csv",
+                  header = TRUE)
+
 
 distance_choices <-  list(
     "Euclidean distance"   = "euclidean",
