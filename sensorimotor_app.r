@@ -4,32 +4,9 @@ library(shiny)
 library(purrr)
 library(stringr)
 
-norms <- read.csv("/Users/cai/Box Sync/LANGBOOT Project/Model/FINAL_sensorimotor_norms_for_39707_words.csv",
-                  header = TRUE)
+source("text.r")
+source("norms.r")
 
-random_norms <- function(n) {
-    return(sample(norms$Word, n))
-}
-
-random_norm <- function() {
-    return(random_norms(1)[1])
-}
-
-random_norm_pairs <- function(n) {
-    pairs <- random_norms(2*n)
-    dim(pairs) <- c(n, 2)
-    # Convert matrix to list of rows
-    return(split(pairs, rep(1:nrow(pairs), each = ncol(pairs))) %>% array)
-}
-
-render_pairs <- function(pairs, item_sep = " : ", pair_sep = "\n") {
-    text_block <- pairs %>%
-        map(paste, collapse = item_sep) %>%
-        unlist %>%
-        paste(collapse = pair_sep) %>%
-        tolower
-    return(text_block)
-}
 
 distance_choices <-  list(
     "Euclidean distance"   = "euclidean",
