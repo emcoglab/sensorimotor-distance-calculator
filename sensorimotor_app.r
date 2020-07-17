@@ -8,8 +8,7 @@ norms <- read.csv("/Users/cai/Box Sync/LANGBOOT Project/Model/FINAL_sensorimotor
                   header = TRUE)
 
 random_norms <- function(n) {
-    return(
-        sample(norms$Word, n))
+    return(sample(norms$Word, n))
 }
 
 random_norm <- function() {
@@ -17,26 +16,19 @@ random_norm <- function() {
 }
 
 random_norm_pairs <- function(n) {
-    some_norms <- random_norms(2*n)
-    pairs <- list(some_norms[1:n], some_norms[n+1:2*n]) %>% transpose()
-    return(pairs)
+    pairs <- random_norms(2*n)
+    dim(pairs) <- c(n, 2)
+    # Convert matrix to list of rows
+    return(split(pairs, rep(1:nrow(pairs), each = ncol(pairs))) %>% array)
 }
 
-# Join a list by newlines
-render_list <- function(norms_list, sep = "\n") {
-    return(paste(norms_list, sep = sep))
-}
-
-# Join a pair by a separator
-render_pair <- function(pair, sep = ":") {
-    return(paste(pair, sep = sep))
-}
-
-render_pairs <- function(pairs, sep = ":") {
-    return(
-        pairs %>%
-            map(render_pair) %>%
-            render_list)
+render_pairs <- function(pairs, item_sep = " : ", pair_sep = "\n") {
+    text_block <- pairs %>%
+        map(paste, collapse = item_sep) %>%
+        unlist %>%
+        paste(collapse = pair_sep) %>%
+        tolower
+    return(text_block)
 }
 
 distance_choices <-  list(
@@ -157,11 +149,18 @@ server <- function(input, output, session) {
     
     pairs_box_is_empty <- reactive({ nchar(input$word_pairs) == 0 })
     
+    # Wire clear button
     observeEvent(input$clear, {
         updateTextInput(session, "word_pairs", value = "")
     })
     
-    output$pair_count <- renderText({nrow(word_pairs)})
+    # Wire show-me button
+    observeEvent(input$show_me, {
+        pairs = render_pairs(random_norm_pairs(10))
+        updateTextInput(session, "word_pairs", value = pairs)
+    })
+    
+    output$pair_count <- renderText({length(word_pairs)})
 }
 
 # Run the application 
