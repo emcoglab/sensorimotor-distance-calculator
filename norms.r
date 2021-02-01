@@ -1,5 +1,6 @@
-norms <- read.csv("/Users/cai/Box Sync/LANGBOOT Project/Model/FINAL_sensorimotor_norms_for_39707_words.csv",
+norms <- read.csv("/Volumes/Mordin/web-app data/sensorimotor-shiny/FINAL_sensorimotor_norms_for_39707_words.csv",
                   header = TRUE)
+norms$Word = tolower(norms$Word)
 
 random_norms <- function(n) {
   return(sample(norms$Word, n))
