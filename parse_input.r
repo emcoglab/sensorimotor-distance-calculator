@@ -104,3 +104,40 @@ get_words <- function(words_block) {
     "words" = words, 
     "missing" = missing))
 }
+
+# tries to convert `input` to a float.
+# params:
+#  input
+#  default - on failure, this is returned as result
+#  empty_to_default - if true (not the default), an empty string results in a successful parse to the default value
+# returns list of:
+#  value: float
+#  success: bool
+try_parse_float <- function(input, default_value, empty_to_default = FALSE) {
+
+  if (empty_to_default && (nchar(input) == 0)) {
+    return(list(
+      value=default_value,
+      success=TRUE,
+      original=input
+    ))
+  }
+  
+ ret = tryCatch(
+    { 
+      return(list(
+        value=as.double(input),
+        success=TRUE,
+        original=input
+      ))
+    },
+    warning=function(w) {
+      return(list(
+        value=default_value,
+        success=FALSE,
+        original=input
+      )) 
+    }
+  )
+  return(ret)
+}

@@ -42,3 +42,15 @@ summarise_pairs <- function(left_words, right_words, words_not_in_norms, malform
   message = paste0(prettyNum(length(left_words)), " valid pairs entered. ", message)
   return(message)
 }
+
+# Provides a text summary of an attempt to parse a positive float
+summarise_positive_float <- function(f, original_input, parse_success) {
+  if (! parse_success) {
+    return(paste0("\"", original_input, "\" not a valid distance."))
+  }
+  if (f <= 0) {
+    return("Please enter a positive distance.")
+  }
+  return("")
+}
+

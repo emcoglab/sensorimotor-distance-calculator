@@ -12,21 +12,24 @@ source("norms.r")
 source("ui_shared_elements.r")
 source("ui_page_about.r")
 source("ui_page_distances.r")
+source("ui_page_neighbours.r")
 source("parse_input.r")
 source("summarise.r")
 source("distance_tables.r")
+source("neighbours.r")
 
 ui <- navbarPage(
     "Explore the Lancaster Sensorimotor Norms",
     page_about,
-    page_distances
+    page_distances,
+    page_neighbours
 )
 
 precision <- 6
 
 server <- function(input, output, session) {
     
-    ## DISTANCES: One-to-one ##
+    ## DISTANCES: One-to-one -----------------
     
     one_one_distance_type <- reactive({ input$one_one_distance })
     
@@ -50,7 +53,7 @@ server <- function(input, output, session) {
     output$one_one_table_download <- downloadHandler(filename=function(){ "distance pairs list.csv" },
                                                      content=function(file) { write.csv(one_one_table_data(), file, row.names=FALSE) })
     
-    ## DISTANCES: One-to-many ##
+    ## DISTANCES: One-to-many -----------------
     
     one_many_distance_type <- reactive({ input$one_many_distance })
     
@@ -70,7 +73,6 @@ server <- function(input, output, session) {
     observeEvent(input$one_many_button_random_many, { updateTextInput(session, "one_many_words_many", value = render_list(random_norms(10))) })
     output$one_many_summary_one  <- renderText({ summarise_word(one_many_left_word(), !(one_many_left_word() %in% norms$Word)) })
     output$one_many_summary_many <- renderText({ summarise_words(one_many_right_words(), one_many_right_missing()) })
-    
     # Wire tables
     one_many_table_data <- reactive({ distance_table_for_one_many(one_many_left_word(), one_many_right_words(), one_many_distance_type()) })
     output$one_many_distances_table <- renderTable({ one_many_table_data() }, digits=precision)
@@ -78,7 +80,7 @@ server <- function(input, output, session) {
     output$one_many_table_download <- downloadHandler(filename=function(){ "distance one-many list.csv" },
                                                       content=function(file) { write.csv(one_many_table_data(), file, row.names=FALSE) })
     
-    ## DISTANCES: Many-to-many ##
+    ## DISTANCES: Many-to-many  -----------------
     
     many_many_distance_type <- reactive({ input$many_many_distance })
     
@@ -110,6 +112,29 @@ server <- function(input, output, session) {
                                                        content=function(file) { write.csv(many_many_list_data(), file, row.names=FALSE) })
     output$many_many_matrix_download <- downloadHandler(filename=function(){ "distance matrix.csv" },
                                                         content=function(file) { write.csv(many_many_matrix_data(), file, row.names=TRUE) })
+    
+    ## NEIGHBOURS -----------------
+    
+    neighbours_distance_type <- reactive({ input$neighbours_distance })
+    neighbours_source_word <- reactive({ canonise_word(input$neighbour_word) })
+    neighbour_count <- reactive({ as.numeric(input$neighbours_count) })
+    
+    neighbour_distance_input    <- reactive({ try_parse_float(input$neighbour_radius, default_value=Inf, empty_to_default=TRUE) })
+    
+    # Prefill word
+    updateTextInput(session, "neighbour_word",   value=random_norm())
+    # Wire I/O
+    observeEvent(input$neighbour_word_button_clear, { updateTextInput(session, "neighbour_word", value = "") })
+    observeEvent(input$neighbour_word_button_random, { updateTextInput(session, "neighbour_word", value = random_norm()) })
+    observeEvent(input$neighbour_button_any_distance, { updateTextInput(session, "neighbour_radius", value = "") })
+    output$neighbour_word_summary <- renderText({ summarise_word(neighbours_source_word(), !(neighbours_source_word() %in% norms$Word)) })
+    output$neighbour_radius_summary <- renderText({ summarise_positive_float(neighbour_distance_input()$value, neighbour_distance_input()$original, neighbour_distance_input()$success) })
+    # Wure tabkes
+    neighbours_table_data <- reactive({ neighbours_table(word=neighbours_source_word(), distance_type=neighbours_distance_type(), count=neighbour_count(), radius = neighbour_distance_input()$value) })
+    output$neighbours_table <- renderTable({ neighbours_table_data() }, digits = precision)
+    # Download link
+    output$neighbour_table_download <- downloadHandler(filename=function() { paste0("neighbours of ", neighbour_word(), ".csv") },
+                                                       content=function() { write.csv(neighbours_table_data(), file, row.names = FALSE) })
     
 }
 

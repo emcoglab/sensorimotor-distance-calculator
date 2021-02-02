@@ -2,6 +2,8 @@ norms <- read.csv("/Volumes/Mordin/web-app data/sensorimotor-shiny/FINAL_sensori
                   header = TRUE)
 norms$Word = tolower(norms$Word)
 
+all_words <- norms$Word
+
 sensory_columns <- c("Auditory.mean", "Gustatory.mean", "Haptic.mean", "Interoceptive.mean", "Olfactory.mean", "Visual.mean")
 motor_columns <- c("Foot_leg.mean", "Hand_arm.mean", "Head.mean", "Mouth.mean", "Torso.mean")
 all_columns <- c(sensory_columns, motor_columns)
