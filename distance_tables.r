@@ -41,3 +41,8 @@ distance_table_for_word_pairs <- function(left_words, right_words, distance_type
   
   return(table_data)
 }
+
+distance_table_for_one_many <- function(left_word, right_words, distance_type) {
+  left_words <- rep(left_word, length(right_words))
+  return(distance_table_for_word_pairs(left_words, right_words, distance_type))
+}

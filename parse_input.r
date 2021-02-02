@@ -1,3 +1,8 @@
+# The canonical form of a word
+canonise_word <- function(word) {
+  return(word %>% str_trim %>% tolower)
+}
+
 # parses a block of word pairs.
 # returns 3 lists:
 #  1. list of pairs of words
@@ -33,8 +38,8 @@ get_word_pairs <- function(word_pairs_block) {
       malformed_lines[length(malformed_lines)+1] = bare_line
       next
     }
-    w1 <- str_trim(pair[1])
-    w2 <- str_trim(pair[2])
+    w1 <- canonise_word(pair[1])
+    w2 <- canonise_word(pair[2])
     
     if (! w1 %in% norms$Word) {
       words_not_in_norms[length(words_not_in_norms)+1] <- w1
@@ -51,7 +56,6 @@ get_word_pairs <- function(word_pairs_block) {
   left_words = unlist(left_words)
   right_words = unlist(right_words)
   
-  
   return(list(
       "left_words" = left_words, 
       "right_words" = right_words,
@@ -59,21 +63,44 @@ get_word_pairs <- function(word_pairs_block) {
       "malformed_lines" = malformed_lines))
 }
 
-# Provides a text summary of word pairs
-summarise_pairs <- function(left_words, right_words, words_not_in_norms, malformed_lines) {
-  # Validate
-  if (length(left_words) != length(right_words)) { stop('Pairs not matched') }
+# parses a block of words.
+# returns 2 lists:
+#  1. list of words (in norms)
+#  2. list of words not in norms
+get_words <- function(words_block) {
   
-  message = ""
-  if (length(left_words) == 0) {
-    return(message)
+  words   <- list()
+  missing <- list()
+  
+  if (nchar(words_block) == 0) {
+    return(list(
+      "words" = words, 
+      "missing" = missing))
   }
-  if (length(malformed_lines) > 0) {
-    message = paste0(message, prettyNum(length(malformed_lines)), " invalid lines (including \"", malformed_lines[1], "\"). ")
+  
+  lines <- words_block %>% strsplit("\n")
+  lines <- lines[[1]]
+  
+  for (line in lines) {
+    bare_line <- str_trim(line)
+    
+    # Skip empty lines
+    if (nchar(bare_line) == 0) { next }
+    
+    word <- canonise_word(bare_line)
+    
+    if (word %in% norms$Word) {
+      words[length(words)+1] <- word
+    }
+    else {
+      missing[length(missing)+1] <- word
+    }
   }
-  if (length(words_not_in_norms) > 0) {
-    message = paste0(message, prettyNum(length(words_not_in_norms)), " concepts not found (including \"", words_not_in_norms[1], "\"). ")
-  }
-  message = paste0(prettyNum(length(left_words)), " valid pairs entered. ", message)
-  return(message)
+  
+  words = unlist(words)
+  missing = unlist(missing)
+  
+  return(list(
+    "words" = words, 
+    "missing" = missing))
 }
