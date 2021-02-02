@@ -35,7 +35,7 @@ server <- function(input, output, session) {
     words_not_in_norms <- reactive({ word_pairs_list()$words_not_in_norms })
     malformed_lines    <- reactive({ word_pairs_list()$malformed_lines })
     
-    pairs_box_is_empty <- reactive({ nchar(input$word_pairs) == 0 })
+    updateTextInput(session, "word_pairs", value=render_pairs(random_norm_pairs(10)))
     
     # Wire clear button
     observeEvent(input$clear, {
