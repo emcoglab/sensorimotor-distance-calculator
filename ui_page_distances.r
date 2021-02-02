@@ -4,7 +4,7 @@ tab_one_to_one <- tabPanel(
   title = "One-to-one",
   sidebarLayout(
     sidebarPanel(
-      h3("Calculate distances between concept pairs"),
+      h3("Calculate distances between concepts"),
       distance_select_with_id("one_one"),
       helpText(
         "Enter pairs of concepts separated by colons, with each pair on a ",
@@ -37,7 +37,7 @@ tab_one_to_one <- tabPanel(
         # TODO: based on table output, not words input... or hidden shared input?
         condition = "input.one_one_word_pairs.length > 0",
         downloadButton(outputId = "one_one_table_download",
-                       label = "Download distances list [.csv]")
+                       label = "Download distance list [.csv]")
       )
     )
   )
@@ -47,11 +47,10 @@ tab_one_to_many <- tabPanel(
   title = "One-to-many",
   sidebarLayout(
     sidebarPanel(
-      h3("Calculate the distance between concept pairs"),
+      h3("Calculate the distance between concepts"),
       distance_select_with_id("one_many"),
       helpText(
-        "Enter pairs of concepts separated by colons, with each pair on a ",
-        "separate line."
+        "Enter concepts separated by colons, on separate lines."
       ),
       textInput(
         inputId = "one_many_word_one",
@@ -73,7 +72,7 @@ tab_one_to_many <- tabPanel(
       ),
       conditionalPanel(
         condition = "input.one_many_words_many.length == 0",
-        actionButton("one_many_button_random_many", label = "Random word pairs"),
+        actionButton("one_many_button_random_many", label = "Randoms"),
       ),
       conditionalPanel(
         condition = "input.one_many_words_many.length > 0",
@@ -82,7 +81,7 @@ tab_one_to_many <- tabPanel(
       textOutput("one_many_summary_many"),
       helpText(
         "Calculate distances between the vector ", 
-        " representation of a concept and several ",
+        "representation of a concept and several ",
         "other concepts. Select the distance type ",
         "from the drop-down, and enter pairs of ",
         "concepts in the text box."
@@ -94,7 +93,65 @@ tab_one_to_many <- tabPanel(
         # TODO: based on table output, not words input... or hidden shared input?
         condition = "(input.one_many_words_many.length > 0) && (input.one_many_word_one.length > 0)",
         downloadButton(outputId = "one_many_table_download",
-                       label = "Download distances list [.csv]")
+                       label = "Download distance list [.csv]")
+      )
+    )
+  )
+)
+
+tab_many_to_many <- tabPanel(
+  title = "Many-to-many",
+  sidebarLayout(
+    sidebarPanel(
+      h3("Calculate the distance between concepts"),
+      distance_select_with_id("many_many"),
+      helpText(
+        "Enter pair concepts here, on separate lines."
+      ),
+      textAreaInput(
+        inputId = "many_many_words_left",
+        label = "First concepts",
+        rows = 10
+      ),
+      conditionalPanel(
+        condition = "input.many_many_words_left.length == 0",
+        actionButton("many_many_button_random_left", label = "Random words"),
+      ),
+      conditionalPanel(
+        condition = "input.many_many_words_left.length > 0",
+        actionButton("many_many_button_clear_left", label = "Clear"),
+      ),
+      textOutput("many_many_summary_left"),
+      textAreaInput(
+        inputId = "many_many_words_right",
+        label = "Second concepts",
+        rows = 10
+      ),
+      conditionalPanel(
+        condition = "input.many_many_words_right.length == 0",
+        actionButton("many_many_button_random_right", label = "Random words"),
+      ),
+      conditionalPanel(
+        condition = "input.many_many_words_right.length > 0",
+        actionButton("many_many_button_clear_right", label = "Clear"),
+      ),
+      textOutput("many_many_summary_right"),
+      helpText(
+        "Calculate distances between the vector ", 
+        "representation of different concepts. ",
+        "Select the distance type from the drop-down, ",
+        "and enter lists of concepts in the text boxes."
+      )
+    ),
+    mainPanel(
+      tableOutput(outputId = "many_many_distances_table"),
+      conditionalPanel(
+        # TODO: based on table output, not words input... or hidden shared input?
+        condition = "(input.many_many_words_left.length > 0) && (input.many_many_words_right.length > 0)",
+        downloadButton(outputId = "many_many_matrix_download",
+                       label = "Download distance matrix [.csv]"),
+        downloadButton(outputId = "many_many_table_download",
+                       label = "Download distance list [.csv]")
       )
     )
   )
@@ -103,5 +160,6 @@ tab_one_to_many <- tabPanel(
 page_distances <- navbarMenu(
   "Calculate distances",
   tab_one_to_one,
-  tab_one_to_many
+  tab_one_to_many,
+  tab_many_to_many
 )

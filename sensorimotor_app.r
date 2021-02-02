@@ -2,6 +2,7 @@ library(magrittr)
 library(readr)
 library(shiny)
 library(purrr)
+library(tidyr)
 library(stringr)
 library(dplyr)
 library(rdist)
@@ -47,7 +48,7 @@ server <- function(input, output, session) {
     output$one_one_distances_table <- renderTable({ one_one_table_data() }, digits=precision)
     # Download link
     output$one_one_table_download <- downloadHandler(filename=function(){ "distance pairs list.csv" },
-                                                     content=function(file) { write.csv(one_one_table_data(), file) })
+                                                     content=function(file) { write.csv(one_one_table_data(), file, row.names=FALSE) })
     
     ## DISTANCES: One-to-many ##
     
@@ -75,7 +76,40 @@ server <- function(input, output, session) {
     output$one_many_distances_table <- renderTable({ one_many_table_data() }, digits=precision)
     # Download link
     output$one_many_table_download <- downloadHandler(filename=function(){ "distance one-many list.csv" },
-                                                                content=function(file) { write.csv(one_many_table_data(), file) })
+                                                      content=function(file) { write.csv(one_many_table_data(), file, row.names=FALSE) })
+    
+    ## DISTANCES: Many-to-many ##
+    
+    many_many_distance_type <- reactive({ input$many_many_distance })
+    
+    many_many_words_input_left <- reactive({ get_words(input$many_many_words_left) })
+    many_many_left_words       <- reactive({ many_many_words_input_left()$words })
+    many_many_left_missing     <- reactive({ many_many_words_input_left()$missing })
+    
+    many_many_words_input_right <- reactive({ get_words(input$many_many_words_right) })
+    many_many_right_words       <- reactive({ many_many_words_input_right()$words })
+    many_many_right_missing     <- reactive({ many_many_words_input_right()$missing })
+    
+    # Prefill words
+    updateTextInput(session, "many_many_words_left",  value=render_list(random_norms(10)))
+    updateTextInput(session, "many_many_words_right", value=render_list(random_norms(10)))
+    # Wire I/O
+    observeEvent(input$many_many_button_clear_left,  { updateTextInput(session, "many_many_words_left",  value = "") })
+    observeEvent(input$many_many_button_clear_right, { updateTextInput(session, "many_many_words_right", value = "") })
+    observeEvent(input$many_many_button_random_left,  { updateTextInput(session, "many_many_words_left",  value = render_list(random_norms(10))) })
+    observeEvent(input$many_many_button_random_right, { updateTextInput(session, "many_many_words_right", value = render_list(random_norms(10))) })
+    output$many_many_summary_left  <- renderText({ summarise_words(many_many_left_words(), many_many_left_missing()) })
+    output$many_many_summary_right <- renderText({ summarise_words(many_many_right_words(), many_many_right_missing()) })
+    
+    # Wire tables
+    many_many_matrix_data <- reactive({ distance_matrix_for_word_pairs(many_many_left_words(), many_many_right_words(), many_many_distance_type()) })
+    many_many_list_data <- reactive({ distance_list_from_matrix(many_many_matrix_data(), many_many_distance_type()) })
+    output$many_many_distances_table <- renderTable({ many_many_matrix_data() }, digits=precision, rownames=T)
+    # Download links
+    output$many_many_table_download <- downloadHandler(filename=function(){ "distance asymmetric list.csv" },
+                                                       content=function(file) { write.csv(many_many_list_data(), file, row.names=FALSE) })
+    output$many_many_matrix_download <- downloadHandler(filename=function(){ "distance matrix.csv" },
+                                                        content=function(file) { write.csv(many_many_matrix_data(), file, row.names=TRUE) })
     
 }
 
