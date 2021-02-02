@@ -5,13 +5,15 @@
 #  3. list of malformed lines
 get_word_pairs <- function(word_pairs_block) {
   
-  word_pairs         <- list()
+  left_words         <- list()
+  right_words        <- list()
   words_not_in_norms <- list()
   malformed_lines    <- list()
   
   if (nchar(word_pairs_block) == 0) {
     return(list(
-      "word_pairs" = word_pairs, 
+      "left_words" = left_words, 
+      "right_words" = right_words,
       "words_not_in_norms" = words_not_in_norms, 
       "malformed_lines" = malformed_lines))
   }
@@ -41,20 +43,29 @@ get_word_pairs <- function(word_pairs_block) {
       words_not_in_norms[length(words_not_in_norms)+1] <- w2
     }
     if ((w1 %in% norms$Word) && (w2 %in% norms$Word)) { 
-      word_pairs[[length(word_pairs)+1]] <- list(w1, w2)
+      left_words[length(left_words)+1] <- w1
+      right_words[length(right_words)+1] <- w2
     }
   }
   
+  left_words = unlist(left_words)
+  right_words = unlist(right_words)
+  
+  
   return(list(
-    "word_pairs" = word_pairs, 
-    "words_not_in_norms" = words_not_in_norms, 
-    "malformed_lines" = malformed_lines))
+      "left_words" = left_words, 
+      "right_words" = right_words,
+      "words_not_in_norms" = words_not_in_norms, 
+      "malformed_lines" = malformed_lines))
 }
 
 # Provides a text summary of word pairs
-summarise_pairs <- function(word_pairs, words_not_in_norms, malformed_lines) {
+summarise_pairs <- function(left_words, right_words, words_not_in_norms, malformed_lines) {
+  # Validate
+  if (length(left_words) != length(right_words)) { stop('Pairs not matched') }
+  
   message = ""
-  if (length(word_pairs) == 0) {
+  if (length(left_words) == 0) {
     return(message)
   }
   if (length(malformed_lines) > 0) {
@@ -63,6 +74,6 @@ summarise_pairs <- function(word_pairs, words_not_in_norms, malformed_lines) {
   if (length(words_not_in_norms) > 0) {
     message = paste0(message, prettyNum(length(words_not_in_norms)), " concepts not found (including \"", words_not_in_norms[1], "\"). ")
   }
-  message = paste0(prettyNum(length(word_pairs)), " valid pairs entered. ", message)
+  message = paste0(prettyNum(length(left_words)), " valid pairs entered. ", message)
   return(message)
 }

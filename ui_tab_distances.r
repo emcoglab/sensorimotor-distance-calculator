@@ -1,13 +1,5 @@
 source("ui_shared_elements.r")
 
-
-distance_choices <-  list(
-  "Euclidean distance"   = "euclidean",
-  "Minkowski-3 distance" = "minkowski3",
-  "Cosine distance"      = "cosine",
-  "Correlation distance" = "correlation")
-distance_default <- "minkowski3"
-
 tab_one_to_one <- tabPanel(
   title = "One-to-one",
   h3("Calculate the distance between concept pairs"),

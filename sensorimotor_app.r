@@ -4,7 +4,7 @@ library(shiny)
 library(purrr)
 library(stringr)
 library(dplyr)
-library(torch)
+library(rdist)
 
 source("text.r")
 source("norms.r")
@@ -30,7 +30,8 @@ server <- function(input, output, session) {
     
     word_pairs_list <- reactive({ get_word_pairs(input$word_pairs) })
     # unpack
-    word_pairs         <- reactive({ word_pairs_list()$word_pairs })
+    left_words         <- reactive({ word_pairs_list()$left_words })
+    right_words        <- reactive({ word_pairs_list()$right_words })
     words_not_in_norms <- reactive({ word_pairs_list()$words_not_in_norms })
     malformed_lines    <- reactive({ word_pairs_list()$malformed_lines })
     
@@ -48,10 +49,13 @@ server <- function(input, output, session) {
     })
     
     # Wire summary text
-    output$summary_pairs <- renderText({summarise_pairs(word_pairs(), words_not_in_norms(), malformed_lines())})
+    output$summary_pairs <- renderText({
+        summarise_pairs(left_words(), right_words(), words_not_in_norms(), malformed_lines())
+    })
     
     # Wire tables
-    output$pairs_table <- renderTable({ distance_table_for_word_pairs(word_pairs(), distance_type()) })
+    pairs_table_data   <- reactive({ distance_table_for_word_pairs(left_words(), right_words(), distance_type()) })
+    output$pairs_table <- renderTable({ pairs_table_data() }, digits=6)
     
 }
 

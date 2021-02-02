@@ -21,9 +21,15 @@ random_norm_pairs <- function(n) {
   return(split(pairs, rep(1:nrow(pairs), each = ncol(pairs))) %>% array)
 }
 
+# Returns a 11-dim vector for the supplied word
+vector_for_word <- function(word) {
+  v <- norms[norms$Word == word, all_columns]
+  return(v)
+}
+
 # Returns a n x 11 matrix for the supplied words
 matrix_for_words <- function(words) {
-  return(
-    as.matrix(norms[norms$Word %in% words, all_columns])
-  )
+  # Use match to preserve the order from `words`
+  mx <- as.matrix(norms[match(words, norms$Word), all_columns])
+  return(mx)
 }

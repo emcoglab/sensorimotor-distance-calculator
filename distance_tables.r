@@ -1,26 +1,43 @@
 source("norms.r")
 
-distance_table_for_word_pairs <- function(word_pairs, distance_type) {
+distance_table_for_word_pairs <- function(left_words, right_words, distance_type) {
+  # Validate
+  if (length(left_words) != length(right_words)) { stop('Pairs not matched') }
   
-  if (length(word_pairs) == 0) {
+  if (length(left_words) == 0) {
     return (NULL)
   }
   
-  table_data <- as.data.frame(matrix(unlist(word_pairs), nrow=length(word_pairs)))
+  table_data <- data.frame(
+    W1 = left_words,
+    W2 = right_words
+  )
   names(table_data) <- c("Word 1", "Word 2")
   
-  matrix_left <- matrix_for_words(table_data$`Word 1`)
-  matrix_right <- matrix_for_words(table_data$`Word 2`)
+  matrix_left <- matrix_for_words(left_words)
+  matrix_right <- matrix_for_words(right_words)
   
   if (distance_type == "minkowski3") {
-    pdist_fun <- nn_pairwise_distance(p=3)
-    distances <- pdist_fun(matrix_left, matrix_right)
+    distance_col_name <- "Minkowski-3 distance"
+    distances <- diag(cdist(matrix_left, matrix_right, metric="minkowski", p=3))
   }
   else if(distance_type == "euclidean") {
-    pdist_fun <- nn_pairwise_distance(p=2)
-    distances <- pdist_fun(matrix_left, matrix_right)
+    distance_col_name <- "Euclidean distance"
+    distances <- diag(cdist(matrix_left, matrix_right, metric="euclidean", p=2))
+  }
+  else if(distance_type == "cosine") {
+    distance_col_name <- "Cosine distance"
+    distances <- diag(cdist(matrix_left, matrix_right, metric=function(x, y) {1 - (x %*% y / sqrt(x%*%x * y%*%y))} ))
+  }
+  else if(distance_type == "correlation") {
+    distance_col_name <- "Correlation distance"
+    distances <- diag(cdist(matrix_left, matrix_right, metric="correlation"))
+  }
+  else {
+    stop("Unsupported distance type")
   }
   
+  table_data[, distance_col_name] = distances
   
-  browser()
+  return(table_data)
 }
