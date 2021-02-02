@@ -55,7 +55,14 @@ server <- function(input, output, session) {
     
     # Wire tables
     pairs_table_data   <- reactive({ distance_table_for_word_pairs(left_words(), right_words(), distance_type()) })
-    output$pairs_table <- renderTable({ pairs_table_data() }, digits=6)
+    output$distances_table <- renderTable({ pairs_table_data() }, digits=6)
+    # Download link
+    output$distances_table_download <- downloadHandler(
+        filename=function(){ "distance pairs list.csv" },
+        content=function(file) {
+            write.csv(pairs_table_data(), file)
+        }
+    )
     
 }
 

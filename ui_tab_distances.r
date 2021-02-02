@@ -37,5 +37,10 @@ tab_distances <- tabPanel(
       type = "pills"
     )),
   mainPanel(
-    tableOutput(outputId = "pairs_table"),
+    tableOutput(outputId = "distances_table"),
+    conditionalPanel(
+      condition = "input.word_pairs.length > 0",
+      downloadButton(outputId = "distances_table_download",
+                     label = "Download distances list [.csv]")
+    )
   ))
