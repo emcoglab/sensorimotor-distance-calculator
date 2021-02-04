@@ -29,10 +29,21 @@ ui <- navbarPage(
     page_distances,
     page_neighbours,
     page_arrange,
-    page_explore
+    page_explore,
+    header=list(
+        tags$head(
+            includeCSS("assets/styles.css")
+        )
+    ),
+    footer=list(
+        tags$div(
+            includeMarkdown("logos.md"),
+            includeMarkdown("footer.md"),
+            HTML(paste0("Version ", meta_version, ".")),
+            class="footer"
+        )
+    )
 )
-
-precision <- 6
 
 server <- function(input, output, session) {
     
