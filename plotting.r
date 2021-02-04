@@ -86,6 +86,7 @@ tsne_plot <- function(tsne_positions, dominance, dims) {
                 size=2,
                 opacity=0.7
               ),
-              x=~x, y=~y, z=~z)
+              x=~x, y=~y, z=~z,
+              hoverinfo='text', text=~Word)
   return(fig)
 }
