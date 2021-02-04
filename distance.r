@@ -1,20 +1,25 @@
-distance_col_name <- function(distance_type) {
+distance_name <- function(distance_type) {
   if (distance_type == "minkowski3") {
-    distance_col_name <- "Minkowski-3 distance"
+    return("Minkowski-3")
   }
   else if(distance_type == "euclidean") {
-    distance_col_name <- "Euclidean distance"
+    return("Euclidean")
   }
   else if(distance_type == "cosine") {
-    distance_col_name <- "Cosine distance"
+    return("cosine")
   }
   else if(distance_type == "correlation") {
-    distance_col_name <- "Correlation distance"
+    return("correlation")
   }
   else {
     stop("Unsupported distance type")
   }
-  return(distance_col_name)
+}
+
+distance_col_name <- function(distance_type) {
+  name <- paste0(distance_name(distance_type), " distance")
+  name <- capitalize(tolower(name))  # Just the first letter is capitalised
+  return(name)
 }
 
 distance_matrix <- function(matrix_left, matrix_right, distance_type) {

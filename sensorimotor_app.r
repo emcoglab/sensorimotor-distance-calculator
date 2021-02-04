@@ -16,6 +16,7 @@ source("ui_page_about.r")
 source("ui_page_distances.r")
 source("ui_page_neighbours.r")
 source("ui_page_arrange.r")
+source("ui_page_explore.r")
 source("parse_input.r")
 source("summarise.r")
 source("distance_tables.r")
@@ -27,7 +28,8 @@ ui <- navbarPage(
     page_about,
     page_distances,
     page_neighbours,
-    page_arrange
+    page_arrange,
+    page_explore
 )
 
 precision <- 6
@@ -162,6 +164,15 @@ server <- function(input, output, session) {
     # Wire scatterplot
     mds_positions <- reactive({ get_mds_positions_for_words(arrange_words(), arrange_distance_type()) })
     output$arrange_mds_plot <- renderPlotly({ mds_plot(mds_positions(), arrange_show_lines()) })
+    
+    ## EXPLORE --------
+    
+    explore_distance_type <- reactive({ input$explore_distance })
+    explore_dominance <- reactive({ input$explore_dominance })
+    
+    # Wire scatterplot
+    tsne_positions <- reactive({ get_tsne_positions(explore_distance_type(), dims=3) })
+    output$explore_tsne_plot <- renderPlotly({ tsne_plot(tsne_positions(), explore_dominance(), dims=3) })
     
 }
 

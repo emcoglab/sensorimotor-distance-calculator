@@ -1,0 +1,3 @@
+[submodule "tsne_precompute/sensorimotor_norms"]
+	path = tsne_precompute/sensorimotor_norms
+	url = git@github.com:emcoglab/sensorimotor-norms.git

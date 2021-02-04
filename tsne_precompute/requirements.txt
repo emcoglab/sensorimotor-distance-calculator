@@ -1,0 +1,6 @@
+-r sensorimotor_norms/requirements.txt
+numpy
+pandas
+pyyaml
+scipy
+sklearn

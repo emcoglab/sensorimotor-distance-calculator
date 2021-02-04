@@ -1,3 +1,4 @@
+source("meta.r")
 source("norms.r")
 source("distance.r")
 
@@ -61,4 +62,30 @@ get_mds_line_segments <- function(mds_positions) {
     }
   }
   return(segments)
+}
+
+get_tsne_positions <- function(distance_type, dims) {
+  infile <- paste0(data_dir, "t-SNE_", dims, "_", distance_name(distance_type), "_cache.bin")
+  con <- file(infile, "rb")
+  dim <- readBin(con, "integer", 2)
+  Mat <- matrix( readBin(con, "numeric", prod(dim)), dim[1], dim[2])
+  close(con)
+  
+  ret <- data.frame(Mat)
+  ret <- cbind(all_words, ret)
+  names(ret) <- c("Word", "x", "y", "z")
+  
+  return(ret)
+}
+
+tsne_plot <- function(tsne_positions, dominance, dims) {
+  fig <- plot_ly(tsne_positions) %>%
+    add_trace(type="scatter3d",
+              mode="markers",
+              marker=list(
+                size=2,
+                opacity=0.7
+              ),
+              x=~x, y=~y, z=~z)
+  return(fig)
 }
