@@ -10,6 +10,10 @@ sensory_columns <- c("Auditory.mean", "Gustatory.mean", "Haptic.mean", "Interoce
 motor_columns <- c("Foot_leg.mean", "Hand_arm.mean", "Head.mean", "Mouth.mean", "Torso.mean")
 all_columns <- c(sensory_columns, motor_columns)
 
+dominance_column_sensorimotor <- "Dominant.sensorimotor"
+dominance_column_perceptual <- "Dominant.perceptual"
+dominance_column_action <- "Dominant.action"
+
 random_norms <- function(n) {
   return(sample(norms$Word, n))
 }

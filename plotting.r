@@ -79,14 +79,39 @@ get_tsne_positions <- function(distance_type, dims) {
 }
 
 tsne_plot <- function(tsne_positions, dominance, dims) {
-  fig <- plot_ly(tsne_positions) %>%
-    add_trace(type="scatter3d",
-              mode="markers",
-              marker=list(
-                size=2,
-                opacity=0.7
-              ),
-              x=~x, y=~y, z=~z,
-              hoverinfo='text', text=~Word)
+  
+  # Dominance colouring
+  if (dominance == "sensorimotor") {
+    tsne_positions["Dominance"] = norms[dominance_column_sensorimotor]
+  }
+  else if (dominance == "perceptual") {
+    tsne_positions["Dominance"] = norms[dominance_column_perceptual]
+  }
+  else if (dominance == "action") {
+    tsne_positions["Dominance"] = norms[dominance_column_action]
+  }
+  else { stop("Invalid dominance selection.") }
+  
+  # Set up figure
+  if (dims == 3) {
+    fig <- plot_ly(tsne_positions) %>%
+      add_trace(type="scatter3d",
+                mode="markers",
+                marker=list(
+                  size=2,
+                  opacity=0.7
+                ),
+                x=~x, y=~y, z=~z,
+                hoverinfo='text', text=~Word,
+                color=~Dominance, colors="Set3")
+  }
+  else { stop("Not implemented yet") }
+  
+  fig <- fig %>%
+    layout(
+      legend=list(
+        x=0, y=1, 
+        itemsizing="constant"))
+  
   return(fig)
 }
