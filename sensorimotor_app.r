@@ -1,3 +1,4 @@
+library(R.utils)
 library(dplyr)
 library(magrittr)
 library(markdown)
