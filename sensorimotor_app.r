@@ -7,6 +7,7 @@ library(rdist)
 library(shiny)
 library(stringr)
 library(tidyr)
+library(plotly)
 
 source("text.r")
 source("norms.r")
@@ -14,16 +15,19 @@ source("ui_shared_elements.r")
 source("ui_page_about.r")
 source("ui_page_distances.r")
 source("ui_page_neighbours.r")
+source("ui_page_arrange.r")
 source("parse_input.r")
 source("summarise.r")
 source("distance_tables.r")
 source("neighbours.r")
+source("plotting.r")
 
 ui <- navbarPage(
     "Explore the Lancaster Sensorimotor Norms",
     page_about,
     page_distances,
-    page_neighbours
+    page_neighbours,
+    page_arrange
 )
 
 precision <- 6
@@ -136,6 +140,28 @@ server <- function(input, output, session) {
     # Download link
     output$neighbour_table_download <- downloadHandler(filename=function() { paste0("neighbours of ", neighbour_word(), ".csv") },
                                                        content=function() { write.csv(neighbours_table_data(), file, row.names = FALSE) })
+    
+    
+    ## ARRANGE -----------
+    
+    arrange_distance_type <- reactive({ input$arrange_distance })
+    
+    arrange_words_block <- reactive({ get_words(input$arrange_words) })
+    arrange_words       <- reactive({ arrange_words_block()$words })
+    arrange_missing     <- reactive({ arrange_words_block()$missing })
+    
+    arrange_show_lines <- reactive({ input$arrange_show_lines })
+    
+    # Prefill word
+    updateTextInput(session, "arrange_words", value=render_list(random_norms(10)))
+    # Wire I/O
+    observeEvent(input$arrange_button_clear, { updateTextInput(session, "arrange_words", value = "") })
+    observeEvent(input$arrange_button_random, { updateTextInput(session, "arrange_words", value = render_list(random_norms(10))) })
+    output$arrange_words_summary <- renderText({ summarise_words_count_limit(arrange_words(), arrange_missing(), min=3, max=20, clip_max=TRUE) })
+    
+    # Wire scatterplot
+    mds_positions <- reactive({ get_mds_positions_for_words(arrange_words(), arrange_distance_type()) })
+    output$arrange_mds_plot <- renderPlotly({ mds_plot(mds_positions(), arrange_show_lines()) })
     
 }
 

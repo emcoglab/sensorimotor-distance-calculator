@@ -24,6 +24,22 @@ summarise_words <- function(words, missing) {
   return(message)
 }
 
+
+# Provides a text summary of a list of words, with a min/max limit
+summarise_words_count_limit <- function(words, missing, min = -Inf, max = Inf, clip_max = FALSE) {
+  message = summarise_words(words, missing)
+  if (length(words) < min) {
+    message = paste0(message, " Please supply at least ", min, " words. ")
+  }
+  else if (length(words) > max) {
+    message = paste0(message, " Please supply at most ", max, " words. ")
+    if (clip_max) {
+      message = paste0(message, "Using only the first ", max, " words. ")
+    }
+  }
+  return(message)
+}
+
 # Provides a text summary of word pairs
 summarise_pairs <- function(left_words, right_words, words_not_in_norms, malformed_lines) {
   # Validate
