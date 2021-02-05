@@ -107,7 +107,6 @@ tab_many_to_many <- tabPanel(
         actionButton("many_many_button_clear_left", label = "Clear"),
       ),
       textOutput("many_many_summary_left") %>% tagAppendAttributes(class = 'summary'),
-      helpText(includeMarkdown("ui/help_text/text_entry_words.md")),
       checkboxInput(
         inputId = "many_many_symmetric",
         label = "Symmetric distance matrix",
@@ -115,6 +114,7 @@ tab_many_to_many <- tabPanel(
       ),
       conditionalPanel(
         condition = "! input.many_many_symmetric",
+        helpText(includeMarkdown("ui/help_text/text_entry_words.md")),
         textAreaInput(
           inputId = "many_many_words_right",
           label = "Other concepts",
