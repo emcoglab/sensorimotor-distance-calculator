@@ -1,3 +1,4 @@
+# Gets the canonical display name for a distance_type
 distance_name <- function(distance_type) {
   if (distance_type == "minkowski3") {
     return("Minkowski-3")
@@ -16,12 +17,14 @@ distance_name <- function(distance_type) {
   }
 }
 
+# Gets the display column name for a distance type
 distance_col_name <- function(distance_type) {
   name <- paste0(distance_name(distance_type), " distance")
   name <- capitalize(tolower(name))  # Just the first letter is capitalised
   return(name)
 }
 
+# Computes a distance matrix from two data matrices
 distance_matrix <- function(matrix_left, matrix_right, distance_type) {
   if (distance_type == "minkowski3") {
     distances <- cdist(matrix_left, matrix_right, metric="minkowski", p=3)

@@ -1,6 +1,7 @@
 source("calculate/distance.r")
 source("calculate/norms.r")
 
+# Renderable data.frame of nearest neighbours
 neighbours_table <- function(word, distance_type, count, radius) {
   
   if (radius <= 0) { radius = Inf }

@@ -1,3 +1,4 @@
+# A set of distance choices with canonical names
 distance_choices <-  list(
   "Euclidean distance"   = "euclidean",
   "Minkowski-3 distance" = "minkowski3",
@@ -5,6 +6,7 @@ distance_choices <-  list(
   "Correlation distance" = "correlation")
 distance_default <- "minkowski3"
 
+# A distance selector with a given id (to which _distance is appended)
 distance_select_with_id <- function(inputId) {
   return(
     selectInput(

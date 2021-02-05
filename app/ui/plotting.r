@@ -2,6 +2,7 @@ source("meta.r")
 source("calculate/norms.r")
 source("calculate/distance.r")
 
+# Returns data.frame of positions for given words after MDS
 get_mds_positions_for_words <- function(words, distance_type) {
   
   if (length(words) < 3) { return(NULL) }
@@ -27,6 +28,8 @@ get_mds_positions_for_words <- function(words, distance_type) {
   return(positions)
 }
 
+# Returns a plot for a data.frame of mds positions, 
+# with or without connecting lines
 mds_plot <- function(mds_positions, with_lines) {
   
   if (is.null(mds_positions)) {
@@ -68,6 +71,7 @@ mds_plot <- function(mds_positions, with_lines) {
   return(fig)
 }
 
+# Helper function to get all line segments between points
 get_mds_line_segments <- function(mds_positions) {
   segments = list()
   for (i in 1:nrow(mds_positions)) {
@@ -86,6 +90,7 @@ get_mds_line_segments <- function(mds_positions) {
   return(segments)
 }
 
+# Get (load) a data.frame of t-sne positions for all the norms
 get_tsne_positions <- function(distance_type, dims) {
   infile <- paste0(data_dir, "t-SNE_", dims, "_", distance_name(distance_type), "_cache.bin")
   con <- file(infile, "rb")
@@ -100,6 +105,7 @@ get_tsne_positions <- function(distance_type, dims) {
   return(ret)
 }
 
+# A plotly plot for t-sne exploration
 tsne_plot <- function(tsne_positions, dominance, dims) {
   
   # Dominance colouring

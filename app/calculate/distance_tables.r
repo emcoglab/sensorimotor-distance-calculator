@@ -1,23 +1,7 @@
 source("calculate/norms.r")
 source("calculate/distance.r")
 
-distance_matrix_for_word_pairs <- function(left_words, right_words, distance_type) {
-  
-  if (length(left_words) == 0) {
-    return (NULL)
-  }
-  
-  matrix_left <- matrix_for_words(left_words)
-  matrix_right <- matrix_for_words(right_words)
-  
-  distances = distance_matrix(matrix_left, matrix_right, distance_type)
-  
-  table_data = data.frame(distances, row.names=left_words)
-  names(table_data) <- right_words
-  
-  return(table_data)
-}
-
+# Return a data.frame suitable for rendering in a one-one distance comparison
 distance_table_for_word_pairs <- function(left_words, right_words, distance_type) {
   # Validate
   if (length(left_words) != length(right_words)) { stop('Pairs not matched') }
@@ -42,9 +26,28 @@ distance_table_for_word_pairs <- function(left_words, right_words, distance_type
   return(table_data)
 }
 
+# Return a data.frame suitable for rendering in a one-many distance comparison
 distance_table_for_one_many <- function(left_word, right_words, distance_type) {
   left_words <- rep(left_word, length(right_words))
   return(distance_table_for_word_pairs(left_words, right_words, distance_type))
+}
+
+# Return a data.frame suitable for rendering in a many-many distance comparison
+# as a matrix
+distance_matrix_for_word_pairs <- function(left_words, right_words, distance_type) {
+  
+  if (length(left_words)  == 0) { return (NULL) }
+  if (length(right_words) == 0) { return (NULL) }
+  
+  matrix_left <- matrix_for_words(left_words)
+  matrix_right <- matrix_for_words(right_words)
+  
+  distances = distance_matrix(matrix_left, matrix_right, distance_type)
+  
+  table_data = data.frame(distances, row.names=left_words)
+  names(table_data) <- right_words
+  
+  return(table_data)
 }
 
 # Given a distance matrix with row/column names, returns a data.frame with 

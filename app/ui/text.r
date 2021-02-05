@@ -1,3 +1,4 @@
+# Render a list of pairs of words for display
 render_pairs <- function(pairs, item_sep = " : ", pair_sep = "\n") {
   text_block <- pairs %>%
     map(paste, collapse = item_sep) %>%
@@ -7,6 +8,7 @@ render_pairs <- function(pairs, item_sep = " : ", pair_sep = "\n") {
   return(text_block)
 }
 
+# Render a list of words for display
 render_list <- function(list, item_sep = "\n") {
   text_block <- list %>%
     unlist %>%
