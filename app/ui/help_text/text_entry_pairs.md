@@ -1,1 +1,2 @@
-Enter pairs of concepts separated by colons, with each pair on a separate line.
+Enter pairs of concepts separated by colons, commas, tabs, or semicolons.
+Enter each pair on a separate line.
