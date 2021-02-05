@@ -5,6 +5,7 @@ tab_one_to_one <- tabPanel(
   sidebarLayout(
     sidebarPanel(
       h3("Calculate distances between concepts"),
+      h4("One-to-one"),
       distance_select_with_id("one_one"),
       helpText(includeMarkdown("ui/help_text/text_entry_pairs.md")),
       textAreaInput(
@@ -39,7 +40,8 @@ tab_one_to_many <- tabPanel(
   title = "One-to-many",
   sidebarLayout(
     sidebarPanel(
-      h3("Calculate the distance between concepts"),
+      h3("Calculate distances between concepts"),
+      h4("One-to-many"),
       distance_select_with_id("one_many"),
       helpText(includeMarkdown("ui/help_text/text_entry_word.md")),
       textInput(
@@ -85,10 +87,11 @@ tab_one_to_many <- tabPanel(
 )
 
 tab_many_to_many <- tabPanel(
-  title = "Many-to-many",
+  title = "Many-to-many (matrix)",
   sidebarLayout(
     sidebarPanel(
-      h3("Calculate the distance between concepts"),
+      h3("Calculate distances between concepts"),
+      h4("Many-to-many (disatnce matrix)"),
       distance_select_with_id("many_many"),
       helpText(includeMarkdown("ui/help_text/text_entry_words.md")),
       textAreaInput(

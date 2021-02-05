@@ -11,4 +11,4 @@ A full explation of the norms can be found in [this publication](https://osf.io/
 If you use this tool in your research, please cite this tool using the reference information at the bottom of the page.
 
 The code for this project is available [on Github](https://github.com/emcoglab/sensorimotor-web-app-shiny).
-If you encounter any problems, please [email the webmaster](mailto:c.wingfield@lancaster.ac.uk).
+If you encounter any problems, please [email the developer](mailto:c.wingfield@lancaster.ac.uk).
