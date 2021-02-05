@@ -129,6 +129,7 @@ server <- function(input, output, session) {
     observeEvent(input$many_many_button_clear_right, { updateTextInput(session, "many_many_words_right", value = "") })
     observeEvent(input$many_many_button_random_left,  { updateTextInput(session, "many_many_words_left",  value = render_list(random_norms(10))) })
     observeEvent(input$many_many_button_random_right, { updateTextInput(session, "many_many_words_right", value = render_list(random_norms(10))) })
+    observeEvent(input$many_many_button_copy_right, { updateTextInput(session, "many_many_words_right", value = input$many_many_words_left) })
     output$many_many_summary_left  <- renderText({ summarise_words(many_many_left_words(), many_many_left_missing()) })
     output$many_many_summary_right <- renderText({ summarise_words(many_many_right_words(), many_many_right_missing()) })
     

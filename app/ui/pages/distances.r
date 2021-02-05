@@ -116,6 +116,10 @@ tab_many_to_many <- tabPanel(
         actionButton("many_many_button_random_right", label = "Random words"),
       ),
       conditionalPanel(
+        condition = "input.many_many_words_right.length == 0",
+        actionButton("many_many_button_copy_right", label = "Copy from above"),
+      ),
+      conditionalPanel(
         condition = "input.many_many_words_right.length > 0",
         actionButton("many_many_button_clear_right", label = "Clear"),
       ),

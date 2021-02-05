@@ -12,7 +12,7 @@ page_arrange <- tabPanel(
       ),
       conditionalPanel(
         condition = "input.arrange_words.length == 0",
-        actionButton("arrange_button_random", label = "Randoms"),
+        actionButton("arrange_button_random", label = "Random words"),
       ),
       conditionalPanel(
         condition = "input.arrange_words.length > 0",
@@ -31,7 +31,9 @@ page_arrange <- tabPanel(
       helpText(includeMarkdown("ui/help_text/arrange.md")),
     ),
     mainPanel(
-      plotlyOutput(outputId = "arrange_mds_plot")
+      withSpinner(
+        plotlyOutput(outputId = "arrange_mds_plot")
+      )
     )
   )
 )
