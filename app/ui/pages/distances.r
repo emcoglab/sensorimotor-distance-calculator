@@ -95,7 +95,7 @@ tab_many_to_many <- tabPanel(
       helpText(includeMarkdown("ui/help_text/text_entry_words.md")),
       textAreaInput(
         inputId = "many_many_words_left",
-        label = "First concepts",
+        label = "Concepts",
         rows = 10
       ),
       conditionalPanel(
@@ -108,24 +108,28 @@ tab_many_to_many <- tabPanel(
       ),
       textOutput("many_many_summary_left") %>% tagAppendAttributes(class = 'summary'),
       helpText(includeMarkdown("ui/help_text/text_entry_words.md")),
-      conditionalPanel(
-        condition = "input.many_many_words_right.length == 0",
-        actionButton("many_many_button_copy_right", label = "Copy from above"),
-      ),
-      textAreaInput(
-        inputId = "many_many_words_right",
-        label = "Second concepts",
-        rows = 10
+      checkboxInput(
+        inputId = "many_many_symmetric",
+        label = "Symmetric distance matrix",
+        value = TRUE
       ),
       conditionalPanel(
-        condition = "input.many_many_words_right.length == 0",
-        actionButton("many_many_button_random_right", label = "Random words"),
+        condition = "! input.many_many_symmetric",
+        textAreaInput(
+          inputId = "many_many_words_right",
+          label = "Other concepts",
+          rows = 10
+        ),
+        conditionalPanel(
+          condition = "input.many_many_words_right.length == 0",
+          actionButton("many_many_button_random_right", label = "Random words"),
+        ),
+        conditionalPanel(
+          condition = "input.many_many_words_right.length > 0",
+          actionButton("many_many_button_clear_right", label = "Clear"),
+        ),
+        textOutput("many_many_summary_right") %>% tagAppendAttributes(class = 'summary'),
       ),
-      conditionalPanel(
-        condition = "input.many_many_words_right.length > 0",
-        actionButton("many_many_button_clear_right", label = "Clear"),
-      ),
-      textOutput("many_many_summary_right") %>% tagAppendAttributes(class = 'summary'),
       distance_select_with_id("many_many"),
       helpText(includeMarkdown("ui/help_text/distances_many_many.md"))
     ),

@@ -118,7 +118,14 @@ server <- function(input, output, session) {
     many_many_left_words       <- reactive({ many_many_words_input_left()$words })
     many_many_left_missing     <- reactive({ many_many_words_input_left()$missing })
     
-    many_many_words_input_right <- reactive({ get_words(input$many_many_words_right) })
+    many_many_words_input_right <- reactive({ 
+        if (input$many_many_symmetric) {
+            return(many_many_words_input_left())
+        }
+        else {
+            return(get_words(input$many_many_words_right))
+        }
+    })
     many_many_right_words       <- reactive({ many_many_words_input_right()$words })
     many_many_right_missing     <- reactive({ many_many_words_input_right()$missing })
     

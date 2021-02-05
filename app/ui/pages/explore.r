@@ -6,7 +6,7 @@ page_explore <- tabPanel(
     sidebarPanel(
       h3("Explore sensorimotor space"),
       distance_select_with_id("explore"),
-      selectInput(
+      radioButtons(
         inputId = "explore_dominance",
         label = "Colour concepts by their dominance in",
         choices = list(
