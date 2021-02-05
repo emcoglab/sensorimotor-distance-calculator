@@ -38,10 +38,10 @@ page_neighbours <- tabPanel(
       distance_select_with_id("neighbours"),
     ),
     mainPanel(
-      tableOutput(outputId = "neighbours_table"),
       conditionalPanel(
         # TODO: based on table output, not words input... or hidden shared input?
         condition = "input.neighbour_word.length > 0",
+        tableOutput(outputId = "neighbours_table"),
         downloadButton(outputId = "neighbour_table_download",
                        label = "Download [.csv]")
       )

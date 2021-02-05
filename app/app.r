@@ -28,6 +28,12 @@ source("ui/pages/visualise.r")
 source("ui/pages/explore.r")
 source("ui/parse_input.r")
 
+options(
+    # Loading spinner appearance
+    spinner.color = "#e95420", 
+    spinner.type = 7  # 7: three dots
+)
+
 ui <- navbarPage(
     "Sensorimotor distance calculator",
     page_about,
@@ -52,12 +58,6 @@ ui <- navbarPage(
 )
 
 server <- function(input, output, session) {
-    
-    options(
-        # Loading spinner appearance
-        spinner.color = "#e95420", 
-        spinner.type = 7  # 7: three dots
-    )
     
     ## DISTANCES: One-to-one -----------------
     
