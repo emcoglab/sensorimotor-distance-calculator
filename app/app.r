@@ -76,6 +76,11 @@ server <- function(input, output, session) {
     observeEvent(input$one_one_button_random_pairs, { updateTextInput(session, "one_one_word_pairs", value = render_pairs(random_norm_pairs(10))) })
     output$one_one_summary_pairs <- renderText({ summarise_pairs(one_one_left_words(), one_one_right_words(), one_one_words_not_in_norms(), one_one_malformed_lines()) })
     
+    # Show/hide table logic
+    observe({
+        updateCheckboxInput(session, "will_show_table_one_one", value = (length(one_one_left_words()) > 0) && (length(one_one_right_words()) > 0))
+    })
+    
     # Wire tables
     one_one_table_data <- reactive({ distance_table_for_word_pairs(one_one_left_words(), one_one_right_words(), one_one_distance_type()) })
     output$one_one_distances_table <- renderTable({ one_one_table_data() }, digits=precision)
@@ -103,6 +108,12 @@ server <- function(input, output, session) {
     observeEvent(input$one_many_button_random_many, { updateTextInput(session, "one_many_words_many", value = render_list(random_norms(10))) })
     output$one_many_summary_one  <- renderText({ summarise_word(one_many_left_word(), !(one_many_left_word() %in% norms$Word)) })
     output$one_many_summary_many <- renderText({ summarise_words(one_many_right_words(), one_many_right_missing()) })
+    
+    # Show/hide table logic
+    observe({
+        updateCheckboxInput(session, "will_show_table_one_many", value = (one_many_left_word() %in% norms$Word) && (length(one_many_right_words()) > 0))
+    })
+    
     # Wire tables
     one_many_table_data <- reactive({ distance_table_for_one_many(one_many_left_word(), one_many_right_words(), one_many_distance_type()) })
     output$one_many_distances_table <- renderTable({ one_many_table_data() }, digits=precision)
@@ -141,6 +152,11 @@ server <- function(input, output, session) {
     output$many_many_summary_left  <- renderText({ summarise_words(many_many_left_words(), many_many_left_missing()) })
     output$many_many_summary_right <- renderText({ summarise_words(many_many_right_words(), many_many_right_missing()) })
     
+    # Show/hide table logic
+    observe({
+        updateCheckboxInput(session, "will_show_table_many_many", value = (length(many_many_right_words()) > 0) && (length(many_many_left_words()) > 0))
+    })
+    
     # Wire tables
     many_many_matrix_data <- reactive({ distance_matrix_for_word_pairs(many_many_left_words(), many_many_right_words(), many_many_distance_type()) })
     many_many_list_data <- reactive({ distance_list_from_matrix(many_many_matrix_data(), many_many_distance_type()) })
@@ -167,6 +183,12 @@ server <- function(input, output, session) {
     observeEvent(input$neighbour_button_any_distance, { updateTextInput(session, "neighbour_radius", value = "") })
     output$neighbour_word_summary <- renderText({ summarise_word(neighbours_source_word(), !(neighbours_source_word() %in% norms$Word)) })
     output$neighbour_radius_summary <- renderText({ summarise_positive_float(neighbour_distance_input()$value, neighbour_distance_input()$original, neighbour_distance_input()$success) })
+    
+    # Show/hide table logic
+    observe({
+        updateCheckboxInput(session, "will_show_table_neighbours", value = neighbours_source_word() %in% norms$Word)
+    })
+    
     # Wure tabkes
     neighbours_table_data <- reactive({ neighbours_table(word=neighbours_source_word(), distance_type=neighbours_distance_type(), count=neighbour_count(), radius = neighbour_distance_input()$value) })
     output$neighbours_table <- renderTable({ neighbours_table_data() }, digits = precision)

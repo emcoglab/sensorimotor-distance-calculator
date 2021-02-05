@@ -25,10 +25,10 @@ tab_one_to_one <- tabPanel(
       helpText(includeMarkdown("ui/help_text/distances_one_one.md"))
     ),
     mainPanel(
-      tableOutput(outputId = "one_one_distances_table"),
+      checkboxInput("will_show_table_one_one", label="") %>% tagAppendAttributes(class = 'hidden'),
       conditionalPanel(
-        # TODO: based on table output, not words input... or hidden shared input?
-        condition = "input.one_one_word_pairs.length > 0",
+        condition = "input.will_show_table_one_one",
+        tableOutput(outputId = "one_one_distances_table"),
         downloadButton(outputId = "one_one_table_download",
                        label = "Download distance list [.csv]")
       )
@@ -64,7 +64,7 @@ tab_one_to_many <- tabPanel(
       ),
       conditionalPanel(
         condition = "input.one_many_words_many.length == 0",
-        actionButton("one_many_button_random_many", label = "Randoms"),
+        actionButton("one_many_button_random_many", label = "Random words"),
       ),
       conditionalPanel(
         condition = "input.one_many_words_many.length > 0",
@@ -75,10 +75,10 @@ tab_one_to_many <- tabPanel(
       helpText(includeMarkdown("ui/help_text/distances_one_many.md"))
     ),
     mainPanel(
-      tableOutput(outputId = "one_many_distances_table"),
+      checkboxInput("will_show_table_one_many", label="") %>% tagAppendAttributes(class = 'hidden'),
       conditionalPanel(
-        # TODO: based on table output, not words input... or hidden shared input?
-        condition = "(input.one_many_words_many.length > 0) && (input.one_many_word_one.length > 0)",
+        condition = "input.will_show_table_one_many",
+        tableOutput(outputId = "one_many_distances_table"),
         downloadButton(outputId = "one_many_table_download",
                        label = "Download distance list [.csv]")
       )
@@ -134,10 +134,10 @@ tab_many_to_many <- tabPanel(
       helpText(includeMarkdown("ui/help_text/distances_many_many.md"))
     ),
     mainPanel(
-      tableOutput(outputId = "many_many_distances_table"),
+      checkboxInput("will_show_table_many_many", label="") %>% tagAppendAttributes(class = 'hidden'),
       conditionalPanel(
-        # TODO: based on table output, not words input... or hidden shared input?
-        condition = "(input.many_many_words_left.length > 0) && (input.many_many_words_right.length > 0)",
+        condition = "input.will_show_table_many_many",
+        tableOutput(outputId = "many_many_distances_table"),
         downloadButton(outputId = "many_many_matrix_download",
                        label = "Download distance matrix [.csv]"),
         downloadButton(outputId = "many_many_table_download",

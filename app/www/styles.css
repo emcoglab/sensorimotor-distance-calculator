@@ -5,7 +5,13 @@ body
   font-size: 150%;
 }
 
-.summary{
+.hidden
+{
+  display: none;
+}
+
+.summary
+{
   color: gray;
 }
 

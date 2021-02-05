@@ -38,9 +38,9 @@ page_neighbours <- tabPanel(
       helpText(includeMarkdown("ui/help_text/neighbours.md")),
     ),
     mainPanel(
+      checkboxInput("will_show_table_neighbours", label="") %>% tagAppendAttributes(class = 'hidden'),
       conditionalPanel(
-        # TODO: based on table output, not words input... or hidden shared input?
-        condition = "input.neighbour_word.length > 0",
+        condition = "input.will_show_table_neighbours",
         tableOutput(outputId = "neighbours_table"),
         downloadButton(outputId = "neighbour_table_download",
                        label = "Download [.csv]")
