@@ -6,7 +6,6 @@ tab_one_to_one <- tabPanel(
     sidebarPanel(
       h3("Calculate distances between concepts"),
       h4("One-to-one"),
-      distance_select_with_id("one_one"),
       helpText(includeMarkdown("ui/help_text/text_entry_pairs.md")),
       textAreaInput(
         inputId = "one_one_word_pairs",
@@ -22,6 +21,7 @@ tab_one_to_one <- tabPanel(
         actionButton("one_one_button_clear", label = "Clear"),
       ),
       textOutput("one_one_summary_pairs"),
+      distance_select_with_id("one_one"),
       helpText(includeMarkdown("ui/help_text/distances_one_one.md"))
     ),
     mainPanel(
@@ -42,7 +42,6 @@ tab_one_to_many <- tabPanel(
     sidebarPanel(
       h3("Calculate distances between concepts"),
       h4("One-to-many"),
-      distance_select_with_id("one_many"),
       helpText(includeMarkdown("ui/help_text/text_entry_word.md")),
       textInput(
         inputId = "one_many_word_one",
@@ -72,6 +71,7 @@ tab_one_to_many <- tabPanel(
         actionButton("one_many_button_clear_many", label = "Clear"),
       ),
       textOutput("one_many_summary_many"),
+      distance_select_with_id("one_many"),
       helpText(includeMarkdown("ui/help_text/distances_one_many.md"))
     ),
     mainPanel(
@@ -92,7 +92,6 @@ tab_many_to_many <- tabPanel(
     sidebarPanel(
       h3("Calculate distances between concepts"),
       h4("Many-to-many (disatnce matrix)"),
-      distance_select_with_id("many_many"),
       helpText(includeMarkdown("ui/help_text/text_entry_words.md")),
       textAreaInput(
         inputId = "many_many_words_left",
@@ -127,6 +126,7 @@ tab_many_to_many <- tabPanel(
         actionButton("many_many_button_clear_right", label = "Clear"),
       ),
       textOutput("many_many_summary_right"),
+      distance_select_with_id("many_many"),
       helpText(includeMarkdown("ui/help_text/distances_many_many.md"))
     ),
     mainPanel(

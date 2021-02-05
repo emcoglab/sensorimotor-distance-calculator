@@ -1,1 +1,1 @@
-Enter concepts separated by colons, on separate lines.
+Enter concepts on separate lines.

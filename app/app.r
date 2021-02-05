@@ -28,7 +28,7 @@ source("ui/pages/explore.r")
 source("ui/parse_input.r")
 
 ui <- navbarPage(
-    "Sensorimotor distance",
+    "Sensorimotor distance calculator",
     page_about,
     page_distances,
     page_neighbours,
