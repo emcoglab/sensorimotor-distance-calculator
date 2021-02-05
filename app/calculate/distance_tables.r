@@ -3,9 +3,6 @@ source("calculate/distance.r")
 
 distance_matrix_for_word_pairs <- function(left_words, right_words, distance_type) {
   
-  # Validate
-  if (length(left_words) != length(right_words)) { stop('Pairs not matched') }
-  
   if (length(left_words) == 0) {
     return (NULL)
   }
@@ -16,7 +13,7 @@ distance_matrix_for_word_pairs <- function(left_words, right_words, distance_typ
   distances = distance_matrix(matrix_left, matrix_right, distance_type)
   
   table_data = data.frame(distances, row.names=left_words)
-  names(table_data) <-  right_words
+  names(table_data) <- right_words
   
   return(table_data)
 }

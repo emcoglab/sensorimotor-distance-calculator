@@ -20,7 +20,7 @@ summarise_words <- function(words, missing) {
   if (length(missing) > 0) {
     message = paste0(message, prettyNum(length(missing)), " concepts not found (including \"", missing[1], "\"). ")
   }
-  message = paste0(prettyNum(length(words)), " words entered. ", message)
+  message = paste0(prettyNum(length(words)), " unique words entered. ", message)
   return(message)
 }
 

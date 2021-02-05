@@ -97,8 +97,8 @@ get_words <- function(words_block) {
     }
   }
   
-  words = unlist(words)
-  missing = unlist(missing)
+  words = unique(unlist(words))
+  missing = unique(unlist(missing))
   
   return(list(
     "words" = words, 

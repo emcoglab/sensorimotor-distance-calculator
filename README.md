@@ -1,9 +1,11 @@
 # Sensorimotor distance web app
-
-## Installation and configuration
-
-1.  Open `.rproj` file in RStudio.
     
 ## Running
 
-1.  Run app from `app.r` file
+1.  Open project in RStudio
+2.  Run app from `app.r` file
+
+## Deploy
+
+1.  `setwd("~/code/sensorimotor distance web app - shiny/app")`
+2.  run `deploy/to_shinyapps.io.r`
