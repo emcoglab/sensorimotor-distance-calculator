@@ -7,6 +7,7 @@ library(readr)
 library(rdist)
 library(shiny)
 library(shinythemes)
+library(shinycssloaders)
 library(stringr)
 library(tidyr)
 library(plotly)
@@ -50,6 +51,12 @@ ui <- navbarPage(
 )
 
 server <- function(input, output, session) {
+    
+    options(
+        # Loading spinner appearence
+        spinner.color = "#e95420", 
+        spinner.type = 7  # 7: three dots
+    )
     
     ## DISTANCES: One-to-one -----------------
     

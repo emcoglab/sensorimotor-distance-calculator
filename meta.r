@@ -1,3 +1,4 @@
 precision <- 6
-meta_version = "0.3.2"
+# publication.major.minor
+meta_version = "0.3.3"
 data_dir = "data/"

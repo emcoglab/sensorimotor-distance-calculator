@@ -19,8 +19,10 @@ page_explore <- tabPanel(
       helpText(includeMarkdown("ui/help_text/explore.md")),
     ),
     mainPanel(
-      plotlyOutput(outputId = "explore_tsne_plot",
-                   height='80vh')
+      withSpinner(
+        plotlyOutput(outputId = "explore_tsne_plot",
+                     height='60vh')
+      )
     )
   )
 )

@@ -2,6 +2,8 @@ The *Lancaster Sensorimotor Norms* are norms of sensorimotor strength for 39,707
 
 These norms provide a valuable resource to researchers in diverse areas including psycholinguistics, grounded cognition, cognitive semantics, knowledge representation, machine learning, and big data approaches to the analysis of language and conceptual representations.
 
+---
+
 Use the tabs above to select the different modes of operation.
 
 A full explation of the norms can be found in [this publication](https://osf.io/v9j6q/), alongside an [online tool to search and display the data](https://www.lancaster.ac.uk/psychology/lsnorms/). The full dataset behind the norms can be [downloaded](http://osf.io/7emr6/).
