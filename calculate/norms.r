@@ -1,7 +1,6 @@
 source("meta.r")
 
-norms <- read.csv(paste0(data_dir, "FINAL_sensorimotor_norms_for_39707_words.csv"),
-                  header = TRUE)
+norms <- read.csv(paste0(data_dir, "FINAL_sensorimotor_norms_for_39707_words.csv"), header = TRUE)
 norms$Word = tolower(norms$Word)
 
 all_words <- norms$Word

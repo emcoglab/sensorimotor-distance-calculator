@@ -1,0 +1,1 @@
+Plot a t-SNE arrangement of all sensorimotor concepts. Select the distance type from the drop-down. Chose whether to colour points by dominance in perceptual, action or sensorimor components. Click an entry in the legend to hide those points; double-click to hide other points. Mouse-over the plot to show other controls. Legend colours are selected at random.

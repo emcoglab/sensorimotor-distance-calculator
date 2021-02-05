@@ -1,6 +1,6 @@
 source("meta.r")
-source("norms.r")
-source("distance.r")
+source("calculate/norms.r")
+source("calculate/distance.r")
 
 get_mds_positions_for_words <- function(words, distance_type) {
   

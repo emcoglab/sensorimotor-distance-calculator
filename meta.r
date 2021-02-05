@@ -1,4 +1,3 @@
 precision <- 6
-meta_version = "0.3.1"
-meta_url = "url-placeholder"
-data_dir = "/Volumes/Mordin/web-app data/sensorimotor-shiny/"
+meta_version = "0.3.2"
+data_dir = "data/"

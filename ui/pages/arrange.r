@@ -1,4 +1,4 @@
-source("ui_shared_elements.r")
+source("ui/shared_elements.r")
 
 page_arrange <- tabPanel(
   title = "Arrange concepts",
@@ -28,14 +28,7 @@ page_arrange <- tabPanel(
           "Hide lines" = FALSE
         ),
         selected = TRUE),
-      helpText(
-        "Plot an MDS (multidimensional scaling) arrangemet of concepts using ",
-        "their vector representations. Enter a list of concepts in the text ",
-        "box (maximum of 20), click the 'Refresh graph' button to update the ",
-        "graph. Change the distance measure and whether to connect concept ", 
-        "points with lines using the drop-downs. Click the 'show me' button ",
-        "to start with a random concept."
-      ),
+      helpText(includeMarkdown("ui/help_text/arrange.md")),
     ),
     mainPanel(
       plotlyOutput(outputId = "arrange_mds_plot")

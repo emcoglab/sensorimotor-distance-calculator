@@ -6,4 +6,4 @@
     
 ## Running
 
-1.  Run `sensorimotor_app.r` file
+1.  Run app from `app.r` file

@@ -10,19 +10,20 @@ library(stringr)
 library(tidyr)
 library(plotly)
 
-source("text.r")
-source("norms.r")
-source("ui_shared_elements.r")
-source("ui_page_about.r")
-source("ui_page_distances.r")
-source("ui_page_neighbours.r")
-source("ui_page_arrange.r")
-source("ui_page_explore.r")
-source("parse_input.r")
-source("summarise.r")
-source("distance_tables.r")
-source("neighbours.r")
-source("plotting.r")
+source("meta.r")
+source("calculate/norms.r")
+source("calculate/neighbours.r")
+source("calculate/distance_tables.r")
+source("ui/text.r")
+source("ui/summarise.r")
+source("ui/plotting.r")
+source("ui/shared_elements.r")
+source("ui/pages/about.r")
+source("ui/pages/distances.r")
+source("ui/pages/neighbours.r")
+source("ui/pages/arrange.r")
+source("ui/pages/explore.r")
+source("ui/parse_input.r")
 
 ui <- navbarPage(
     "Explore the Lancaster Sensorimotor Norms",
@@ -38,8 +39,8 @@ ui <- navbarPage(
     ),
     footer=list(
         tags$div(
-            includeMarkdown("logos.md"),
-            includeMarkdown("footer.md"),
+            includeMarkdown("ui/page_text/logos.md"),
+            includeMarkdown("ui/page_text/footer.md"),
             HTML(paste0("Version ", meta_version, ".")),
             class="footer"
         )

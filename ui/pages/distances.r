@@ -1,4 +1,4 @@
-source("ui_shared_elements.r")
+source("ui/shared_elements.r")
 
 tab_one_to_one <- tabPanel(
   title = "One-to-one",
@@ -6,10 +6,7 @@ tab_one_to_one <- tabPanel(
     sidebarPanel(
       h3("Calculate distances between concepts"),
       distance_select_with_id("one_one"),
-      helpText(
-        "Enter pairs of concepts separated by colons, with each pair on a ",
-        "separate line."
-      ),
+      helpText(includeMarkdown("ui/help_text/text_entry_pairs.md")),
       textAreaInput(
         inputId = "one_one_word_pairs",
         label = "Concept pairs",
@@ -24,12 +21,7 @@ tab_one_to_one <- tabPanel(
         actionButton("one_one_button_clear", label = "Clear"),
       ),
       textOutput("one_one_summary_pairs"),
-      helpText(
-        "Calculate distances between pairs of concepts' ",
-        "vector representations. Select the distance ",
-        "type from the drop-down, and enter pairs of ",
-        "concepts in the text box."
-      )
+      helpText(includeMarkdown("ui/help_text/distances_one_one.md"))
     ),
     mainPanel(
       tableOutput(outputId = "one_one_distances_table"),
@@ -49,9 +41,7 @@ tab_one_to_many <- tabPanel(
     sidebarPanel(
       h3("Calculate the distance between concepts"),
       distance_select_with_id("one_many"),
-      helpText(
-        "Enter concepts separated by colons, on separate lines."
-      ),
+      helpText(includeMarkdown("ui/help_text/text_entry_word.md")),
       textInput(
         inputId = "one_many_word_one",
         label = "First concept",
@@ -65,6 +55,7 @@ tab_one_to_many <- tabPanel(
         actionButton("one_many_button_clear_one", label = "Clear"),
       ),
       textOutput("one_many_summary_one"),
+      helpText(includeMarkdown("ui/help_text/text_entry_words.md")),
       textAreaInput(
         inputId = "one_many_words_many",
         label = "Other concepts",
@@ -79,13 +70,7 @@ tab_one_to_many <- tabPanel(
         actionButton("one_many_button_clear_many", label = "Clear"),
       ),
       textOutput("one_many_summary_many"),
-      helpText(
-        "Calculate distances between the vector ", 
-        "representation of a concept and several ",
-        "other concepts. Select the distance type ",
-        "from the drop-down, and enter pairs of ",
-        "concepts in the text box."
-      )
+      helpText(includeMarkdown("ui/help_text/distances_one_many.md"))
     ),
     mainPanel(
       tableOutput(outputId = "one_many_distances_table"),
@@ -105,9 +90,7 @@ tab_many_to_many <- tabPanel(
     sidebarPanel(
       h3("Calculate the distance between concepts"),
       distance_select_with_id("many_many"),
-      helpText(
-        "Enter pair concepts here, on separate lines."
-      ),
+      helpText(includeMarkdown("ui/help_text/text_entry_words.md")),
       textAreaInput(
         inputId = "many_many_words_left",
         label = "First concepts",
@@ -122,6 +105,7 @@ tab_many_to_many <- tabPanel(
         actionButton("many_many_button_clear_left", label = "Clear"),
       ),
       textOutput("many_many_summary_left"),
+      helpText(includeMarkdown("ui/help_text/text_entry_words.md")),
       textAreaInput(
         inputId = "many_many_words_right",
         label = "Second concepts",
@@ -136,12 +120,7 @@ tab_many_to_many <- tabPanel(
         actionButton("many_many_button_clear_right", label = "Clear"),
       ),
       textOutput("many_many_summary_right"),
-      helpText(
-        "Calculate distances between the vector ", 
-        "representation of different concepts. ",
-        "Select the distance type from the drop-down, ",
-        "and enter lists of concepts in the text boxes."
-      )
+      helpText(includeMarkdown("ui/help_text/distances_many_many.md"))
     ),
     mainPanel(
       tableOutput(outputId = "many_many_distances_table"),

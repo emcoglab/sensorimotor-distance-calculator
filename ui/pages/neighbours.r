@@ -1,10 +1,11 @@
-source("ui_shared_elements.r")
+source("ui/shared_elements.r")
 
 page_neighbours <- tabPanel(
   title = "Find neighbours",
   sidebarLayout(
     sidebarPanel(
       h3("Find neighbours"),
+      helpText(includeMarkdown("ui/help_text/text_entry_word.md")),
       textInput(
         inputId = "neighbour_word",
         label = "Concept"
@@ -18,11 +19,7 @@ page_neighbours <- tabPanel(
         actionButton("neighbour_word_button_clear", label = "Clear"),
       ),
       textOutput("neighbour_word_summary"),
-      helpText(
-        "Find nearest neighbours of a concept via its vector representation. ",
-        "Select the number of neighbours to find, optionally restrict to a ",
-        "maximum distance, and selec the distance type from the drop down."
-      ),
+      helpText(includeMarkdown("ui/help_text/neighbours.md")),
       selectInput(
         choices=c(10, 20, 30, 40, 50, 100, 200),
         label="Number",

@@ -1,0 +1,1 @@
+Plot an MDS (multidimensional scaling) arrangemet of concepts using their vector representations. Enter a list of concepts in the text box (maximum of 20), click the "Refresh graph" button to update the graph. Change the distance measure and whether to connect concept "points with lines using the drop-downs. Click the 'show me' button to start with a random concept.

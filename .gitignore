@@ -1,4 +1,14 @@
+.Rproj
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
+
+# Shinyapps.io
+rsconnect/
+
+# Large files
+data/
+
+# Secret
+deploy/to_shinyapps.io.r

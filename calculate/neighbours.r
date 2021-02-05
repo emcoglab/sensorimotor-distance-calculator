@@ -1,5 +1,5 @@
-source("distance.r")
-source("norms.r")
+source("calculate/distance.r")
+source("calculate/norms.r")
 
 neighbours_table <- function(word, distance_type, count, radius) {
   

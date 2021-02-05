@@ -1,5 +1,5 @@
-source("norms.r")
-source("distance.r")
+source("calculate/norms.r")
+source("calculate/distance.r")
 
 distance_matrix_for_word_pairs <- function(left_words, right_words, distance_type) {
   
