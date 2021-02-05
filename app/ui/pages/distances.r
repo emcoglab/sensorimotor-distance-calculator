@@ -20,7 +20,7 @@ tab_one_to_one <- tabPanel(
         condition = "input.one_one_word_pairs.length > 0",
         actionButton("one_one_button_clear", label = "Clear"),
       ),
-      textOutput("one_one_summary_pairs"),
+      textOutput("one_one_summary_pairs") %>% tagAppendAttributes(class = 'summary'),
       distance_select_with_id("one_one"),
       helpText(includeMarkdown("ui/help_text/distances_one_one.md"))
     ),
@@ -55,7 +55,7 @@ tab_one_to_many <- tabPanel(
         condition = "input.one_many_word_one.length > 0",
         actionButton("one_many_button_clear_one", label = "Clear"),
       ),
-      textOutput("one_many_summary_one"),
+      textOutput("one_many_summary_one") %>% tagAppendAttributes(class = 'summary'),
       helpText(includeMarkdown("ui/help_text/text_entry_words.md")),
       textAreaInput(
         inputId = "one_many_words_many",
@@ -70,7 +70,7 @@ tab_one_to_many <- tabPanel(
         condition = "input.one_many_words_many.length > 0",
         actionButton("one_many_button_clear_many", label = "Clear"),
       ),
-      textOutput("one_many_summary_many"),
+      textOutput("one_many_summary_many") %>% tagAppendAttributes(class = 'summary'),
       distance_select_with_id("one_many"),
       helpText(includeMarkdown("ui/help_text/distances_one_many.md"))
     ),
@@ -106,7 +106,7 @@ tab_many_to_many <- tabPanel(
         condition = "input.many_many_words_left.length > 0",
         actionButton("many_many_button_clear_left", label = "Clear"),
       ),
-      textOutput("many_many_summary_left"),
+      textOutput("many_many_summary_left") %>% tagAppendAttributes(class = 'summary'),
       helpText(includeMarkdown("ui/help_text/text_entry_words.md")),
       conditionalPanel(
         condition = "input.many_many_words_right.length == 0",
@@ -125,7 +125,7 @@ tab_many_to_many <- tabPanel(
         condition = "input.many_many_words_right.length > 0",
         actionButton("many_many_button_clear_right", label = "Clear"),
       ),
-      textOutput("many_many_summary_right"),
+      textOutput("many_many_summary_right") %>% tagAppendAttributes(class = 'summary'),
       distance_select_with_id("many_many"),
       helpText(includeMarkdown("ui/help_text/distances_many_many.md"))
     ),

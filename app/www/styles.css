@@ -5,6 +5,10 @@ body
   font-size: 150%;
 }
 
+.summary{
+  color: gray;
+}
+
 .footer
 {
   margin-top: 4em;

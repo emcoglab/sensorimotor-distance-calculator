@@ -23,7 +23,7 @@ source("ui/shared_elements.r")
 source("ui/pages/about.r")
 source("ui/pages/distances.r")
 source("ui/pages/neighbours.r")
-source("ui/pages/arrange.r")
+source("ui/pages/visualise.r")
 source("ui/pages/explore.r")
 source("ui/parse_input.r")
 
@@ -32,7 +32,7 @@ ui <- navbarPage(
     page_about,
     page_distances,
     page_neighbours,
-    page_arrange,
+    page_visualise,
     page_explore,
     header=list(
         tags$head(
@@ -53,7 +53,7 @@ ui <- navbarPage(
 server <- function(input, output, session) {
     
     options(
-        # Loading spinner appearence
+        # Loading spinner appearance
         spinner.color = "#e95420", 
         spinner.type = 7  # 7: three dots
     )
@@ -167,26 +167,26 @@ server <- function(input, output, session) {
                                                        content=function() { write.csv(neighbours_table_data(), file, row.names = FALSE) })
     
     
-    ## ARRANGE -----------
+    ## visualise -----------
     
-    arrange_distance_type <- reactive({ input$arrange_distance })
+    visualise_distance_type <- reactive({ input$visualise_distance })
     
-    arrange_words_block <- reactive({ get_words(input$arrange_words) })
-    arrange_words       <- reactive({ arrange_words_block()$words })
-    arrange_missing     <- reactive({ arrange_words_block()$missing })
+    visualise_words_block <- reactive({ get_words(input$visualise_words) })
+    visualise_words       <- reactive({ visualise_words_block()$words })
+    visualise_missing     <- reactive({ visualise_words_block()$missing })
     
-    arrange_show_lines <- reactive({ input$arrange_show_lines })
+    visualise_show_lines <- reactive({ input$visualise_show_lines })
     
     # Prefill word
-    updateTextInput(session, "arrange_words", value=render_list(random_norms(10)))
+    updateTextInput(session, "visualise_words", value=render_list(random_norms(10)))
     # Wire I/O
-    observeEvent(input$arrange_button_clear, { updateTextInput(session, "arrange_words", value = "") })
-    observeEvent(input$arrange_button_random, { updateTextInput(session, "arrange_words", value = render_list(random_norms(10))) })
-    output$arrange_words_summary <- renderText({ summarise_words_count_limit(arrange_words(), arrange_missing(), min=3, max=20, clip_max=TRUE) })
+    observeEvent(input$visualise_button_clear, { updateTextInput(session, "visualise_words", value = "") })
+    observeEvent(input$visualise_button_random, { updateTextInput(session, "visualise_words", value = render_list(random_norms(10))) })
+    output$visualise_words_summary <- renderText({ summarise_words_count_limit(visualise_words(), visualise_missing(), min=3, max=20, clip_max=TRUE) })
     
     # Wire scatterplot
-    mds_positions <- reactive({ get_mds_positions_for_words(arrange_words(), arrange_distance_type()) })
-    output$arrange_mds_plot <- renderPlotly({ mds_plot(mds_positions(), arrange_show_lines()) })
+    mds_positions <- reactive({ get_mds_positions_for_words(visualise_words(), visualise_distance_type()) })
+    output$visualise_mds_plot <- renderPlotly({ mds_plot(mds_positions(), visualise_show_lines()) })
     
     ## EXPLORE --------
     

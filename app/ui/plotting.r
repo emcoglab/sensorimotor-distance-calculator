@@ -144,6 +144,7 @@ tsne_plot <- function(tsne_positions, dominance, dims) {
       ),
       legend=list(
         x=0, y=1, 
+        title=list(text='Click to turn on/off'),
         itemsizing="constant"))
   
   return(fig)

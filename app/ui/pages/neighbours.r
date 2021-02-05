@@ -18,7 +18,7 @@ page_neighbours <- tabPanel(
         condition = "input.neighbour_word.length > 0",
         actionButton("neighbour_word_button_clear", label = "Clear"),
       ),
-      textOutput("neighbour_word_summary"),
+      textOutput("neighbour_word_summary") %>% tagAppendAttributes(class = 'summary'),
       helpText(includeMarkdown("ui/help_text/neighbours.md")),
       selectInput(
         choices=c(10, 20, 30, 40, 50, 100, 200),
@@ -34,7 +34,7 @@ page_neighbours <- tabPanel(
         condition = "input.neighbour_radius.length > 0",
         actionButton("neighbour_button_any_distance", label = "Any distance"),
       ),
-      textOutput("neighbour_radius_summary"),
+      textOutput("neighbour_radius_summary") %>% tagAppendAttributes(class = 'summary'),
       distance_select_with_id("neighbours"),
     ),
     mainPanel(
