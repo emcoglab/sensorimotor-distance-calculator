@@ -31,7 +31,7 @@ get_word_pairs <- function(word_pairs_block) {
     # Skip empty lines
     if (nchar(bare_line) == 0) { next }
     
-    pair = bare_line %>% strsplit("[:,;\t]") %>% unlist
+    pair = bare_line %>% strsplit("[:;,\t]") %>% unlist
     pair = Filter(function(s) {s != ""}, pair)
     if (!length(pair) == 2) {
       malformed_lines[length(malformed_lines)+1] = bare_line
@@ -77,8 +77,7 @@ get_words <- function(words_block) {
       "missing" = missing))
   }
   
-  lines <- words_block %>% strsplit("\n")
-  lines <- lines[[1]]
+  lines <- words_block %>% strsplit("[:;,\t\n]") %>% unlist
   
   for (line in lines) {
     bare_line <- str_trim(line)
