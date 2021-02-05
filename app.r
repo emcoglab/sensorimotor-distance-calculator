@@ -6,6 +6,7 @@ library(purrr)
 library(readr)
 library(rdist)
 library(shiny)
+library(shinythemes)
 library(stringr)
 library(tidyr)
 library(plotly)
@@ -26,7 +27,7 @@ source("ui/pages/explore.r")
 source("ui/parse_input.r")
 
 ui <- navbarPage(
-    "Explore the Lancaster Sensorimotor Norms",
+    "Sensorimotor distance",
     page_about,
     page_distances,
     page_neighbours,
@@ -34,7 +35,7 @@ ui <- navbarPage(
     page_explore,
     header=list(
         tags$head(
-            includeCSS("assets/styles.css")
+            includeCSS("www/styles.css")
         )
     ),
     footer=list(
@@ -44,7 +45,8 @@ ui <- navbarPage(
             HTML(paste0("Version ", meta_version, ".")),
             class="footer"
         )
-    )
+    ),
+    theme = shinytheme("united")
 )
 
 server <- function(input, output, session) {
