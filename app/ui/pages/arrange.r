@@ -27,7 +27,7 @@ page_arrange <- tabPanel(
           "Show lines" = TRUE,
           "Hide lines" = FALSE
         ),
-        selected = TRUE),
+        selected = FALSE),
       helpText(includeMarkdown("ui/help_text/arrange.md")),
     ),
     mainPanel(

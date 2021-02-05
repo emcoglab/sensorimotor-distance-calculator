@@ -106,6 +106,10 @@ tab_many_to_many <- tabPanel(
       ),
       textOutput("many_many_summary_left"),
       helpText(includeMarkdown("ui/help_text/text_entry_words.md")),
+      conditionalPanel(
+        condition = "input.many_many_words_right.length == 0",
+        actionButton("many_many_button_copy_right", label = "Copy from above"),
+      ),
       textAreaInput(
         inputId = "many_many_words_right",
         label = "Second concepts",
@@ -114,10 +118,6 @@ tab_many_to_many <- tabPanel(
       conditionalPanel(
         condition = "input.many_many_words_right.length == 0",
         actionButton("many_many_button_random_right", label = "Random words"),
-      ),
-      conditionalPanel(
-        condition = "input.many_many_words_right.length == 0",
-        actionButton("many_many_button_copy_right", label = "Copy from above"),
       ),
       conditionalPanel(
         condition = "input.many_many_words_right.length > 0",

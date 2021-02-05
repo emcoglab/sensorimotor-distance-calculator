@@ -25,9 +25,23 @@ mds_plot <- function(mds_positions, with_lines) {
     return(NULL)
   }
   
-  axis <- list(title = "", showgrid = FALSE, showticklabels = FALSE, zeroline = FALSE)
+  axis <- list(
+    title = "",
+    showgrid = FALSE,
+    showticklabels = FALSE, 
+    zeroline = FALSE,
+    fixedrange = TRUE)
   
-  nodes <- plot_ly(mds_positions) %>% add_trace(x = ~x, y = ~y, type = 'scatter', mode="markers+text", text = ~Word, textposition='bottom')
+  nodes <- plot_ly(mds_positions) %>% 
+    config(
+      toImageButtonOptions = list(
+        format = "svg",
+        filename = "mds-plot",
+        width = 600,
+        height = 700
+      )
+    ) %>%
+    add_trace(x = ~x, y = ~y, type = 'scatter', mode="markers+text", text = ~Word, textposition='bottom')
   
   if (with_lines) {
     fig <- layout(
@@ -95,6 +109,14 @@ tsne_plot <- function(tsne_positions, dominance, dims) {
   # Set up figure
   if (dims == 3) {
     fig <- plot_ly(tsne_positions) %>%
+      config(
+        toImageButtonOptions = list(
+          format = "svg",
+          filename = "tsne-plot",
+          width = 600,
+          height = 700
+        )
+      ) %>%
       add_trace(type="scatter3d",
                 mode="markers",
                 marker=list(
@@ -109,6 +131,17 @@ tsne_plot <- function(tsne_positions, dominance, dims) {
   
   fig <- fig %>%
     layout(
+      scene=list(
+        xaxis=list(
+          showspikes=FALSE,
+          visible=FALSE),
+        yaxis=list(
+          showspikes=FALSE,
+          visible=FALSE),
+        zaxis=list(
+          showspikes=FALSE,
+          visible=FALSE)
+      ),
       legend=list(
         x=0, y=1, 
         itemsizing="constant"))

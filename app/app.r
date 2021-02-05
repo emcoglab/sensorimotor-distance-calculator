@@ -136,7 +136,7 @@ server <- function(input, output, session) {
     # Wire tables
     many_many_matrix_data <- reactive({ distance_matrix_for_word_pairs(many_many_left_words(), many_many_right_words(), many_many_distance_type()) })
     many_many_list_data <- reactive({ distance_list_from_matrix(many_many_matrix_data(), many_many_distance_type()) })
-    output$many_many_distances_table <- renderTable({ many_many_matrix_data() }, digits=precision, rownames=T)
+    output$many_many_distances_table <- renderTable({ many_many_matrix_data() }, digits=precision, rownames=TRUE)
     # Download links
     output$many_many_table_download <- downloadHandler(filename=function(){ "distance asymmetric list.csv" },
                                                        content=function(file) { write.csv(many_many_list_data(), file, row.names=FALSE) })
