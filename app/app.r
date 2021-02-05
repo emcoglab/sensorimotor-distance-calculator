@@ -1,4 +1,5 @@
 library(R.utils)
+library(MASS)
 library(dplyr)
 library(magrittr)
 library(markdown)
@@ -167,7 +168,7 @@ server <- function(input, output, session) {
                                                        content=function() { write.csv(neighbours_table_data(), file, row.names = FALSE) })
     
     
-    ## visualise -----------
+    ## VISUALISE -----------
     
     visualise_distance_type <- reactive({ input$visualise_distance })
     

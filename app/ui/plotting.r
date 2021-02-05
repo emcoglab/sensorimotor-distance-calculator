@@ -10,13 +10,21 @@ get_mds_positions_for_words <- function(words, distance_type) {
   data_matrix <- matrix_for_words(words)
   d <- distance_matrix(data_matrix, data_matrix, distance_type)
   
-  fit <- cmdscale(d)
+  if (distance_type %in% c("euclidean", "minkowski3")) {
+    # Use metric MDS
+    points <- cmdscale(d)
+  }
+  else if (distance_type %in% c("cosine", "correlation")) {
+    fit <- isoMDS(d, k = 2)
+    points <- fit$points
+  }
+  else { stop("Unsupported distance function.")}
   
-  ret <- data.frame(fit)
-  ret <- cbind(words, ret)
-  names(ret) <- c("Word", "x", "y")
+  positions <- data.frame(points)
+  positions <- cbind(words, positions)
+  names(positions) <- c("Word", "x", "y")
   
-  return(ret)
+  return(positions)
 }
 
 mds_plot <- function(mds_positions, with_lines) {
