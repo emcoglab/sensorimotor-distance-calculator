@@ -10,9 +10,9 @@ page_explore <- tabPanel(
         inputId = "explore_dominance",
         label = "Colour concepts by their dominance in",
         choices = list(
-          "Sensorimotor modality" = "sensorimotor",
+          "Sensorimotor dimension" = "sensorimotor",
           "Perceptual modality" = "perceptual",
-          "Action modality" = "action"
+          "Action effector" = "action"
         ),
         selected = "sensorimotor"
       ),

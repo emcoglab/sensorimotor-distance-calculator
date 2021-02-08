@@ -1,6 +1,6 @@
 Plot a t-SNE arrangement of all sensorimotor concepts.  Click and drag on the image to rotate in three dimensions.
 
-Select the distance type from the drop-down. Chose whether to colour points by dominance in perceptual, action or sensorimor components.
+Select the distance type from the drop-down. Chose whether to colour points by their dominance in perceptual, action or sensorimor components.
 
 Click an entry in the legend to hide those points; double-click to hide other points. Mouse-over the plot to show other controls.
 
