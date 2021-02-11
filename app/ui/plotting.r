@@ -100,8 +100,14 @@ get_tsne_positions <- function(distance_type, dims) {
 
   ret <- data.frame(Mat)
   ret <- cbind(all_words, ret)
-  names(ret) <- c("Word", "x", "y", "z")
-  
+  if (dims == 3) {
+    names(ret) <- c("Word", "x", "y", "z")
+  }
+  else if (dims == 2) {
+    names(ret) <- c("Word", "x", "y")
+  }
+  else { stop("Only supports 2- or 3-dimensional plotting!") }
+
   return(ret)
 }
 
@@ -141,7 +147,27 @@ tsne_plot <- function(tsne_positions, dominance, dims) {
                 hoverinfo='text', text=~Word,
                 color=~Dominance, colors="Set3")
   }
-  else { stop("Not implemented yet") }
+  else if (dims == 2) {
+    fig <- plot_ly(tsne_positions) %>%
+      config(
+        toImageButtonOptions = list(
+          format = "svg",
+          filename = "tsne-plot",
+          width = 600,
+          height = 700
+        )
+      ) %>%
+      add_trace(type="scatter",
+                mode="markers",
+                marker=list(
+                  size=2,
+                  opacity=0.7
+                ),
+                x=~x, y=~y,
+                hoverinfo='text', text=~Word,
+                color=~Dominance, colors="Set3")
+  }
+  else { stop("Only supports 2- or 3-dimensional plotting!") }
 
   fig <- fig %>%
     layout(
