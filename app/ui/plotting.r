@@ -4,13 +4,13 @@ source("calculate/distance.r")
 
 # Returns data.frame of positions for given words after MDS
 get_mds_positions_for_words <- function(words, distance_type) {
-  
+
   if (length(words) < 3) { return(NULL) }
   if (length(words) > 20) { words = words[1:20] }
-  
+
   data_matrix <- matrix_for_words(words)
   d <- distance_matrix(data_matrix, data_matrix, distance_type)
-  
+
   if (distance_type %in% c("euclidean", "minkowski3")) {
     # Use metric MDS
     points <- cmdscale(d)
@@ -20,30 +20,30 @@ get_mds_positions_for_words <- function(words, distance_type) {
     points <- fit$points
   }
   else { stop("Unsupported distance function.")}
-  
+
   positions <- data.frame(points)
   positions <- cbind(words, positions)
   names(positions) <- c("Word", "x", "y")
-  
+
   return(positions)
 }
 
-# Returns a plot for a data.frame of mds positions, 
+# Returns a plot for a data.frame of mds positions,
 # with or without connecting lines
 mds_plot <- function(mds_positions, with_lines) {
-  
+
   if (is.null(mds_positions)) {
     return(NULL)
   }
-  
+
   axis <- list(
     title = "",
     showgrid = FALSE,
-    showticklabels = FALSE, 
+    showticklabels = FALSE,
     zeroline = FALSE,
     fixedrange = TRUE)
-  
-  nodes <- plot_ly(mds_positions) %>% 
+
+  nodes <- plot_ly(mds_positions) %>%
     config(
       toImageButtonOptions = list(
         format = "svg",
@@ -53,7 +53,7 @@ mds_plot <- function(mds_positions, with_lines) {
       )
     ) %>%
     add_trace(x = ~x, y = ~y, type = 'scatter', mode="markers+text", text = ~Word, textposition='bottom')
-  
+
   if (with_lines) {
     fig <- layout(
       nodes,
@@ -67,7 +67,7 @@ mds_plot <- function(mds_positions, with_lines) {
       xaxis = axis, yaxis = axis
     )
   }
-  
+
   return(fig)
 }
 
@@ -97,7 +97,7 @@ get_tsne_positions <- function(distance_type, dims) {
   dim <- readBin(con, "integer", 2)
   Mat <- matrix( readBin(con, "numeric", prod(dim)), dim[1], dim[2])
   close(con)
-  
+
   ret <- data.frame(Mat)
   ret <- cbind(all_words, ret)
   names(ret) <- c("Word", "x", "y", "z")
@@ -107,7 +107,7 @@ get_tsne_positions <- function(distance_type, dims) {
 
 # A plotly plot for t-sne exploration
 tsne_plot <- function(tsne_positions, dominance, dims) {
-  
+
   # Dominance colouring
   if (dominance == "sensorimotor") {
     tsne_positions["Dominance"] = norms[dominance_column_sensorimotor]
@@ -119,7 +119,7 @@ tsne_plot <- function(tsne_positions, dominance, dims) {
     tsne_positions["Dominance"] = norms[dominance_column_action]
   }
   else { stop("Invalid dominance selection.") }
-  
+
   # Set up figure
   if (dims == 3) {
     fig <- plot_ly(tsne_positions) %>%
@@ -142,7 +142,7 @@ tsne_plot <- function(tsne_positions, dominance, dims) {
                 color=~Dominance, colors="Set3")
   }
   else { stop("Not implemented yet") }
-  
+
   fig <- fig %>%
     layout(
       scene=list(
@@ -157,9 +157,9 @@ tsne_plot <- function(tsne_positions, dominance, dims) {
           visible=FALSE)
       ),
       legend=list(
-        x=0, y=1, 
+        x=0, y=1,
         title=list(text='Click to turn on/off'),
         itemsizing="constant"))
-  
+
   return(fig)
 }
