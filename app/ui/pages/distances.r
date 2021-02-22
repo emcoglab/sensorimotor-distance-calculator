@@ -25,12 +25,12 @@ tab_one_to_one <- tabPanel(
       helpText(includeMarkdown("ui/help_text/distances_one_one.md"))
     ),
     mainPanel(
-      checkboxInput("will_show_table_one_one", label="") %>% tagAppendAttributes(class = 'hidden'),
+      checkboxInput("will_show_results_one_one", label="") %>% tagAppendAttributes(class = 'hidden'),
       conditionalPanel(
-        condition = "input.will_show_table_one_one",
-        tableOutput(outputId = "one_one_distances_table"),
+        condition = "input.will_show_results_one_one == 1",
         downloadButton(outputId = "one_one_table_download",
-                       label = "Download distance list [.csv]")
+                       label = "Download distance list [.csv]"),
+        tableOutput(outputId = "one_one_distances_table")
       )
     )
   )
@@ -75,12 +75,12 @@ tab_one_to_many <- tabPanel(
       helpText(includeMarkdown("ui/help_text/distances_one_many.md"))
     ),
     mainPanel(
-      checkboxInput("will_show_table_one_many", label="") %>% tagAppendAttributes(class = 'hidden'),
+      checkboxInput("will_show_results_one_many", label="") %>% tagAppendAttributes(class = 'hidden'),
       conditionalPanel(
-        condition = "input.will_show_table_one_many",
-        tableOutput(outputId = "one_many_distances_table"),
+        condition = "input.will_show_results_one_many",
         downloadButton(outputId = "one_many_table_download",
-                       label = "Download distance list [.csv]")
+                       label = "Download distance list [.csv]"),
+        tableOutput(outputId = "one_many_distances_table")
       )
     )
   )
@@ -134,14 +134,14 @@ tab_many_to_many <- tabPanel(
       helpText(includeMarkdown("ui/help_text/distances_many_many.md"))
     ),
     mainPanel(
-      checkboxInput("will_show_table_many_many", label="") %>% tagAppendAttributes(class = 'hidden'),
+      checkboxInput("will_show_results_many_many", label="") %>% tagAppendAttributes(class = 'hidden'),
       conditionalPanel(
-        condition = "input.will_show_table_many_many",
-        tableOutput(outputId = "many_many_distances_table"),
+        condition = "input.will_show_results_many_many",
         downloadButton(outputId = "many_many_matrix_download",
                        label = "Download distance matrix [.csv]"),
         downloadButton(outputId = "many_many_table_download",
-                       label = "Download distance list [.csv]")
+                       label = "Download distance list [.csv]"),
+        tableOutput(outputId = "many_many_distances_table")
       )
     )
   )

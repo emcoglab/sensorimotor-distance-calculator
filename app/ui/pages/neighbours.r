@@ -38,12 +38,12 @@ page_neighbours <- tabPanel(
       helpText(includeMarkdown("ui/help_text/neighbours.md")),
     ),
     mainPanel(
-      checkboxInput("will_show_table_neighbours", label="") %>% tagAppendAttributes(class = 'hidden'),
+      checkboxInput("will_show_results_neighbours", label="") %>% tagAppendAttributes(class = 'hidden'),
       conditionalPanel(
-        condition = "input.will_show_table_neighbours",
-        tableOutput(outputId = "neighbours_table"),
+        condition = "input.will_show_results_neighbours",
         downloadButton(outputId = "neighbour_table_download",
-                       label = "Download [.csv]")
+                       label = "Download [.csv]"),
+        tableOutput(outputId = "neighbours_table")
       )
     )
   )

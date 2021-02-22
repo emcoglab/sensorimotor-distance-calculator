@@ -3,10 +3,10 @@ source("calculate/norms.r")
 source("calculate/distance.r")
 
 # Returns data.frame of positions for given words after MDS
-get_mds_positions_for_words <- function(words, distance_type) {
+get_mds_positions_for_words <- function(words, distance_type, max_words = Inf) {
 
   if (length(words) < 3) { return(NULL) }
-  if (length(words) > 20) { words = words[1:20] }
+  if (length(words) > max_words) { words = words[1:max_words] }
 
   data_matrix <- matrix_for_words(words)
   d <- distance_matrix(data_matrix, data_matrix, distance_type)

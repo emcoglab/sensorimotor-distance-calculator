@@ -78,7 +78,7 @@ server <- function(input, output, session) {
 
     # Show/hide table logic
     observe({
-        updateCheckboxInput(session, "will_show_table_one_one", value = (length(one_one_left_words()) > 0) && (length(one_one_right_words()) > 0))
+        updateCheckboxInput(session, "will_show_results_one_one", value = (length(one_one_left_words()) > 0) && (length(one_one_right_words()) > 0))
     })
 
     # Wire tables
@@ -111,7 +111,7 @@ server <- function(input, output, session) {
 
     # Show/hide table logic
     observe({
-        updateCheckboxInput(session, "will_show_table_one_many", value = (one_many_left_word() %in% norms$Word) && (length(one_many_right_words()) > 0))
+        updateCheckboxInput(session, "will_show_results_one_many", value = (one_many_left_word() %in% norms$Word) && (length(one_many_right_words()) > 0))
     })
 
     # Wire tables
@@ -149,16 +149,16 @@ server <- function(input, output, session) {
     observeEvent(input$many_many_button_random_left,  { updateTextInput(session, "many_many_words_left",  value = render_list(random_norms(10))) })
     observeEvent(input$many_many_button_random_right, { updateTextInput(session, "many_many_words_right", value = render_list(random_norms(10))) })
     observeEvent(input$many_many_button_copy_right, { updateTextInput(session, "many_many_words_right", value = input$many_many_words_left) })
-    output$many_many_summary_left  <- renderText({ summarise_words(many_many_left_words(), many_many_left_missing()) })
-    output$many_many_summary_right <- renderText({ summarise_words(many_many_right_words(), many_many_right_missing()) })
+    output$many_many_summary_left  <- renderText({ summarise_words_count_limit(many_many_left_words(), many_many_left_missing(), max=max_words_distance_matrtix, clip_max = TRUE) })
+    output$many_many_summary_right <- renderText({ summarise_words_count_limit(many_many_right_words(), many_many_right_missing(), max=max_words_distance_matrtix, clip_max = TRUE) })
 
     # Show/hide table logic
     observe({
-        updateCheckboxInput(session, "will_show_table_many_many", value = (length(many_many_right_words()) > 0) && (length(many_many_left_words()) > 0))
+        updateCheckboxInput(session, "will_show_results_many_many", value = (length(many_many_right_words()) > 0) && (length(many_many_left_words()) > 0))
     })
 
     # Wire tables
-    many_many_matrix_data <- reactive({ distance_matrix_for_word_pairs(many_many_left_words(), many_many_right_words(), many_many_distance_type()) })
+    many_many_matrix_data <- reactive({ distance_matrix_for_word_pairs(many_many_left_words(), many_many_right_words(), many_many_distance_type(), max_words = max_words_distance_matrtix) })
     many_many_list_data <- reactive({ distance_list_from_matrix(many_many_matrix_data(), many_many_distance_type()) })
     output$many_many_distances_table <- renderTable({ many_many_matrix_data() }, digits=precision, rownames=TRUE)
     # Download links
@@ -186,7 +186,7 @@ server <- function(input, output, session) {
 
     # Show/hide table logic
     observe({
-        updateCheckboxInput(session, "will_show_table_neighbours", value = neighbours_source_word() %in% norms$Word)
+        updateCheckboxInput(session, "will_show_results_neighbours", value = neighbours_source_word() %in% norms$Word)
     })
 
     # Wure tabkes
@@ -212,11 +212,12 @@ server <- function(input, output, session) {
     # Wire I/O
     observeEvent(input$visualise_button_clear, { updateTextInput(session, "visualise_words", value = "") })
     observeEvent(input$visualise_button_random, { updateTextInput(session, "visualise_words", value = render_list(random_norms(10))) })
-    output$visualise_words_summary <- renderText({ summarise_words_count_limit(visualise_words(), visualise_missing(), min=3, max=20, clip_max=TRUE) })
+    output$visualise_words_summary <- renderText({ summarise_words_count_limit(visualise_words(), visualise_missing(), min=3, max=max_words_mds, clip_max=TRUE) })
 
     # Wire scatterplot
-    mds_positions <- reactive({ get_mds_positions_for_words(visualise_words(), visualise_distance_type()) })
+    mds_positions <- reactive({ get_mds_positions_for_words(visualise_words(), visualise_distance_type(), max_words=max_words_mds) })
     output$visualise_mds_plot <- renderPlotly({ mds_plot(mds_positions(), visualise_show_lines()) })
+
 
     ## EXPLORE --------
 
