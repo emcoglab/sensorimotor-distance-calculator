@@ -16,10 +16,19 @@ get_mds_positions_for_words <- function(words, distance_type, max_words = Inf) {
     points <- cmdscale(d)
   }
   else if (distance_type %in% c("cosine", "correlation")) {
-    fit <- isoMDS(d, k = 2)
+    # In case the distances are very far from metric, `isoMDS` and `sammon` may
+    # crash or produce degenerate solutions due to its use of cmdscale to
+    # produce the initial configuration.
+    # Therefore we provide a random initial configuration.
+    # First we set the random seed to make the output reproducible
+    set.seed(0)
+    initial_positions <- matrix(runif(length(words) * 2), nrow=length(words))
+    # isoMDS has a tendency to produce degenerate solutions, so we prefer sammon
+    fit <- sammon(d, y = initial_positions, k = 2)
     points <- fit$points
   }
   else { stop("Unsupported distance function.")}
+
 
   positions <- data.frame(points)
   positions <- cbind(words, positions)
