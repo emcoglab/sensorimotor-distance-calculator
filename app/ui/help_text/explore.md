@@ -1,4 +1,6 @@
-Plot a t-SNE arrangement of all sensorimotor concepts.  Click and drag on the image to rotate in three dimensions.
+Plot a t-SNE arrangement of all sensorimotor concepts.
+Click and drag on the image to rotate in three dimensions.
+Use a mousewheel or trackpad scroll to zoom in and out.
 
 Select the distance type from the drop-down. Chose whether to colour points by their dominance in perceptual, action or sensorimor components.
 
