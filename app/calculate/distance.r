@@ -36,7 +36,11 @@ distance_matrix <- function(matrix_left, matrix_right, distance_type) {
     distances <- cdist(matrix_left, matrix_right, metric=function(x, y) {1 - (x %*% y / sqrt(x%*%x * y%*%y))} )
   }
   else if(distance_type == "correlation") {
-    distances <- cdist(matrix_left, matrix_right, metric="correlation")
+    # For some reason, when you tell rdist to do "correlation distance", it
+    # actually does square root of half the correlation distance
+    # this is probably to make it a metric distance.
+    # either way, this is not what we want, and we correct it here
+    distances <- cdist(matrix_left, matrix_right, metric="correlation") ^ 2 * 2
   }
   else {
     stop("Unsupported distance type")
