@@ -44,11 +44,8 @@ summarise_words_count_limit <- function(words, missing, min = -Inf, max = Inf, c
 summarise_pairs <- function(left_words, right_words, words_not_in_norms, malformed_lines) {
   # Validate
   if (length(left_words) != length(right_words)) { stop('Pairs not matched') }
-  
+
   message = ""
-  if (length(left_words) == 0) {
-    return(message)
-  }
   if (length(malformed_lines) > 0) {
     message = paste0(message, prettyNum(length(malformed_lines)), " invalid lines (including \"", malformed_lines[1], "\"). ")
   }

@@ -5,6 +5,7 @@ page_explore <- tabPanel(
   sidebarLayout(
     sidebarPanel(
       h3("Explore sensorimotor space"),
+      aboutText(includeMarkdown("ui/page_text/explore.md")),
       distance_select_with_id("explore"),
       radioButtons(
         inputId = "explore_dominance",
@@ -16,12 +17,15 @@ page_explore <- tabPanel(
         ),
         selected = "sensorimotor"
       ),
-      helpText(includeMarkdown("ui/help_text/explore.md")),
+      helpText(includeMarkdown("ui/help_text/dominance_colouring.md")),
     ),
     mainPanel(
+      helpText(includeMarkdown("ui/help_text/t-sne.md")),
       withSpinner(
-        plotlyOutput(outputId = "explore_tsne_plot",
-                     height='60vh')
+        plotlyOutput(
+          outputId = "explore_tsne_plot",
+          height='60vh'
+        )
       )
     )
   )

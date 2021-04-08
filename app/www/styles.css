@@ -5,6 +5,10 @@ body
   font-size: 150%;
 }
 
+blockquote {
+  font-size: inherit;
+}
+
 .hidden
 {
   display: none;
@@ -13,6 +17,12 @@ body
 .summary
 {
   color: gray;
+}
+
+.inline
+{
+  display: inline-block;
+  margin-right: 10px;
 }
 
 .footer
@@ -25,4 +35,25 @@ body
 {
   height: 30pt;
   margin-right: 30pt;
+}
+
+.control-label {
+  margin-top: 10px;
+}
+
+.help-block
+{
+  margin-top: -10px;
+  border-radius: 4px;
+  background-color: #fffedda8;
+  font-size: smaller;
+  padding: 10px 10px 0 10px;
+  border: 1px solid #e3e3e3;
+}
+
+.about-block
+{
+  color: #737373;
+  padding: 10px 0 5px 15px;
+  border-left: 1px solid #e3e3e3;
 }

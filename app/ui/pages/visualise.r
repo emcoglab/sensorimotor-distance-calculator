@@ -5,27 +5,29 @@ page_visualise <- tabPanel(
   sidebarLayout(
     sidebarPanel(
       h3("Visualise concepts"),
-      helpText(includeMarkdown("ui/help_text/text_entry_words.md")),
+      aboutText(includeMarkdown("ui/page_text/visualise.md")),
       textAreaInput(
         inputId = "visualise_words",
         label = "Concepts",
         rows = 10
       ),
+      helpText(includeMarkdown("ui/help_text/text_entry_words.md")),
       conditionalPanel(
         condition = "input.visualise_words.length == 0",
         actionButton("visualise_button_random", label = "Random words"),
-      ),
+      ) %>% tagAppendAttributes(class = "inline"),
       conditionalPanel(
         condition = "input.visualise_words.length > 0",
         actionButton("visualise_button_clear", label = "Clear"),
-      ),
-      textOutput("visualise_words_summary") %>% tagAppendAttributes(class = 'summary'),
+      ) %>% tagAppendAttributes(class = "inline"),
+      summaryText("visualise_words_summary"),
       distance_select_with_id("visualise"),
       checkboxInput(
         inputId = "visualise_show_lines",
         label = "Show connecting lines",
-        value = FALSE),
-      helpText(includeMarkdown("ui/help_text/visualise.md")),
+        value = FALSE
+      ),
+      helpText(includeMarkdown("ui/help_text/connecting_lines.md")),
     ),
     mainPanel(
       withSpinner(
