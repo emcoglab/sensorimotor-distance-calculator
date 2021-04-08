@@ -8,7 +8,7 @@ Please cite this if you use the tool in your research.
 
 The **Sensorimotor Distance Calculator** is a tool to calculate semantic distance between words/concepts in an 11-dimension sensorimotor space, comprising six perceptual modalities (touch, hearing, smell, taste, vision, and interoception) and five action effectors (mouth/throat, hand/arm, foot/leg, head excluding mouth/throat, and torso).
 
-The sensorimotor space is based on ratings from Lynott et al.'s ([2019](https://doi.org/10.3758/s13428-019-01316-z)) Lancaster Sensorimotor Norms: sensorimotor experience strength ratings gathered from a total of 4,558 participants for 39,707 concepts.
+The sensorimotor space is based on ratings from Lynott et al.'s ([2020](https://doi.org/10.3758/s13428-019-01316-z)) Lancaster Sensorimotor Norms: sensorimotor experience strength ratings gathered from a total of 4,558 participants for 39,707 concepts.
 [Search]((https://www.lancaster.ac.uk/psychology/lsnorms/) or [download](http://osf.io/7emr6/) the full dataset.
 
 Both this distance calculator and the norms provide a valuable resource to researchers in diverse areas including psycholinguistics, grounded cognition, cognitive semantics, knowledge representation, machine learning, and big data approaches to the analysis of language and conceptual representations.
