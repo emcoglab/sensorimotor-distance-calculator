@@ -7,5 +7,5 @@
 
 ## Deploy
 
-1.  `setwd("~/code/sensorimotor distance web app - shiny/app")`
+1.  `setwd("path/to/app")`
 2.  run `deploy/to_shinyapps.io.r`
