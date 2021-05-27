@@ -1,5 +1,5 @@
 # publication.major.minor
-meta_version = "0.8.2"
+meta_version = "0.8.3"
 
 # Display precision of floating points
 precision <- 6
