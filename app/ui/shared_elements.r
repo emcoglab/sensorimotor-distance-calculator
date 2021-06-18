@@ -4,7 +4,7 @@ distance_choices <-  list(
   "Minkowski-3 distance" = "minkowski3",
   "Cosine distance"      = "cosine",
   "Correlation distance" = "correlation")
-distance_default <- "minkowski3"
+distance_default <- "cosine"
 
 # A distance selector with a given id (to which _distance is appended)
 distance_select_with_id <- function(inputId) {
