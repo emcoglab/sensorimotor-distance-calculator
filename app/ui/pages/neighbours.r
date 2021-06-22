@@ -43,6 +43,9 @@ page_neighbours <- tabPanel(
       checkboxInput("will_show_results_neighbours", label="") %>% tagAppendAttributes(class = 'hidden'),
       conditionalPanel(
         condition = "input.will_show_results_neighbours",
+        h3(
+          textOutput("neighbour_title")
+        ),
         downloadButton(outputId = "neighbour_table_download",
                        label = "Download [.csv]"),
         tableOutput(outputId = "neighbours_table")

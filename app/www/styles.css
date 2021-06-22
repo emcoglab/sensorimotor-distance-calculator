@@ -57,3 +57,9 @@ blockquote {
   padding: 10px 0 5px 15px;
   border-left: 1px solid #e3e3e3;
 }
+
+/* Reposition headers inside sidebar to align with headers in main pane */
+form h3
+{
+  margin-top: 1px;
+}

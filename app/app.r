@@ -189,7 +189,10 @@ server <- function(input, output, session) {
         updateCheckboxInput(session, "will_show_results_neighbours", value = neighbours_source_word() %in% norms$Word)
     })
 
-    # Wure tabkes
+    # Set title
+    output$neighbour_title <- renderText({ paste0("Nearest neighbours of “", neighbours_source_word(), "”") })
+
+    # Wire tabkes
     neighbours_table_data <- reactive({ neighbours_table(word=neighbours_source_word(), distance_type=neighbours_distance_type(), count=neighbour_count(), radius = neighbour_distance_input()$value) })
     output$neighbours_table <- renderTable({ neighbours_table_data() }, digits = precision)
     # Download link
