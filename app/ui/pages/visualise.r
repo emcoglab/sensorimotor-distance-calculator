@@ -25,7 +25,7 @@ page_visualise <- tabPanel(
       checkboxInput(
         inputId = "visualise_show_lines",
         label = "Show connecting lines",
-        value = FALSE
+        value = TRUE
       ),
       helpText(includeMarkdown("ui/help_text/connecting_lines.md")),
     ),
