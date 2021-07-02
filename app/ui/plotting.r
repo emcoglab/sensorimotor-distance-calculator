@@ -57,8 +57,8 @@ mds_plot <- function(mds_positions, with_lines) {
       toImageButtonOptions = list(
         format = "svg",
         filename = "mds-plot",
-        width = 600,
-        height = 700
+        width = 1000,
+        height = 1000
       )
     ) %>%
     add_trace(x = ~x, y = ~y, type = 'scatter', mode="markers+text", text = ~Word, textposition='bottom')
