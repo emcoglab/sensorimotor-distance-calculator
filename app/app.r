@@ -50,7 +50,7 @@ ui <- navbarPage(
         tags$div(
             includeMarkdown("ui/page_text/logos.md"),
             includeMarkdown("ui/page_text/footer.md"),
-            HTML(paste0("Version ", meta_version, ".")),
+            tags$a(href="https://github.com/emcoglab/sensorimotor-distance-calculator/releases", paste0("Version ", meta_version, ".")),
             class="footer"
         )
     ),
