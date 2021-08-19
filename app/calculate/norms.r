@@ -2,7 +2,7 @@ source("meta.r")
 
 # The norms
 norms <- read.csv(paste0(data_dir, "FINAL_sensorimotor_norms_for_39707_words.csv"), header = TRUE)
-norms$Word = tolower(norms$Word)
+norms$Word = norms$Word %>% tolower %>% str_squish
 
 # List of all words in the norms
 all_words <- norms$Word
