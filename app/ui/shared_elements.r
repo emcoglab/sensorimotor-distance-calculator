@@ -3,7 +3,8 @@ distance_choices <-  list(
   "Euclidean distance"   = "euclidean",
   "Minkowski-3 distance" = "minkowski3",
   "Cosine distance"      = "cosine",
-  "Correlation distance" = "correlation")
+  "Correlation distance" = "correlation",
+  "Mahalanobis distance" = "mahalanobis")
 distance_default <- "cosine"
 
 # A distance selector with a given id (to which _distance is appended)
