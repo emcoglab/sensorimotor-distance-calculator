@@ -19,7 +19,12 @@ distance_table_for_word_pairs <- function(left_words, right_words, distance_type
   matrix_left <- matrix_for_words(left_words)
   matrix_right <- matrix_for_words(right_words)
 
-  distances = distance_matrix(matrix_left, matrix_right, distance_type)
+  if (distance_type == "mahalanobis") {
+    distances = distance_matrix(matrix_left, matrix_right, distance_type, covariance_matrix = get_covariance_matrix())
+  }
+  else {
+    distances = distance_matrix(matrix_left, matrix_right, distance_type)
+  }
 
   table_data[, distance_col_name(distance_type)] = diag(distances)
 
@@ -44,7 +49,12 @@ distance_matrix_for_word_pairs <- function(left_words, right_words, distance_typ
   matrix_left <- matrix_for_words(left_words)
   matrix_right <- matrix_for_words(right_words)
 
-  distances = distance_matrix(matrix_left, matrix_right, distance_type)
+  if (distance_type == "mahalanobis") {
+    distances = distance_matrix(matrix_left, matrix_right, distance_type, covariance_matrix = get_covariance_matrix())
+  }
+  else {
+    distances = distance_matrix(matrix_left, matrix_right, distance_type)
+  }
 
   table_data = data.frame(distances, row.names=left_words)
   names(table_data) <- right_words
@@ -54,12 +64,12 @@ distance_matrix_for_word_pairs <- function(left_words, right_words, distance_typ
 
 # Given a distance matrix with row/column names, returns a data.frame with
 # columns `Word 1`, `Word 2`, `distance`
-distance_list_from_matrix <- function(distance_matrix, distance_type) {
+distance_list_from_matrix <- function(distance_mx, distance_type) {
   # Convert row names to first column
-  left_words = rownames(distance_matrix)
-  rownames(distance_matrix) = NULL
-  distance_matrix <- cbind(left_words, distance_matrix)
-  list_table <- distance_matrix %>% pivot_longer(!left_words, names_to = "Word 2", values_to = "distance")
+  left_words = rownames(distance_mx)
+  rownames(distance_mx) = NULL
+  distance_mx <- cbind(left_words, distance_mx)
+  list_table <- distance_mx %>% pivot_longer(!left_words, names_to = "Word 2", values_to = "distance")
   names(list_table) <- c("Word 1", "Word 2", distance_col_name(distance_type))
   return(list_table)
 }

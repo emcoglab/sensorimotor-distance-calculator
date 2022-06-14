@@ -12,6 +12,9 @@ distance_name <- function(distance_type) {
   else if(distance_type == "correlation") {
     return("correlation")
   }
+  else if(distance_type == "mahalanobis") {
+    return("Mahalanobis")
+  }
   else {
     stop("Unsupported distance type")
   }
@@ -24,8 +27,26 @@ distance_col_name <- function(distance_type) {
   return(name)
 }
 
+cdist_mahalanobis <-function(X, covariance_matrix) {
+  # Thanks https://stats.stackexchange.com/a/65767/36178
+  
+  invCov = solve(covariance_matrix)
+  svds = svd(invCov)
+  invCovSqr = svds$u %*% diag(sqrt(svds$d)) %*% t(svds$u)
+  
+  Q = data %*% invCovSqr
+  
+  # Calculate distances
+  # pair.diff() calculates the n(n-1)/2 element-by-element
+  # pairwise differences between each row of the input matrix
+  sqrDiffs = pair.diff(Q)^2
+  distVec = rowSums(sqrDiffs)
+  
+  return(squareform(distVec))
+}
+
 # Computes a distance matrix from two data matrices
-distance_matrix <- function(matrix_left, matrix_right, distance_type) {
+distance_matrix <- function(matrix_left, matrix_right, distance_type, covariance_matrix = NULL) {
   if (distance_type == "minkowski3") {
     distances <- cdist(matrix_left, matrix_right, metric="minkowski", p=3)
   }
@@ -41,6 +62,9 @@ distance_matrix <- function(matrix_left, matrix_right, distance_type) {
     # this is probably to make it a metric distance.
     # either way, this is not what we want, and we correct it here
     distances <- cdist(matrix_left, matrix_right, metric="correlation") ^ 2 * 2
+  }
+  else if(distance_type == "mahalanobis") {
+    distances <- cdist_mahalanobis(X = matrix_left - matrix_right, covariance_matrix = covariance_matrix)
   }
   else {
     stop("Unsupported distance type")

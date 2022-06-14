@@ -6,7 +6,13 @@ neighbours_table <- function(word, distance_type, count, radius) {
   
   if (radius <= 0) { radius = Inf }
   
-  mx = distance_matrix(vector_for_word(word), matrix_for_words(all_words), distance_type)
+  if (distance_type == "mahalanobis") {
+    mx = distance_matrix(vector_for_word(word), matrix_for_words(all_words), distance_type, covariance_matrix = get_covariance_matrix())
+  }
+  else {
+    mx = distance_matrix(vector_for_word(word), matrix_for_words(all_words), distance_type)
+  }
+  
   argsort <- order(mx)
   nearest_idxs <- argsort[2:(count+1)]  # Skip the guaranteed nearest neighbour: the word itself
   nearest_words <- all_words[nearest_idxs]

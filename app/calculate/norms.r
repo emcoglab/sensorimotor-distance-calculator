@@ -17,6 +17,17 @@ dominance_column_sensorimotor <- "Dominant.sensorimotor"
 dominance_column_perceptual <- "Dominant.perceptual"
 dominance_column_action <- "Dominant.action"
 
+# Get (load) the covariance matrix of the norms
+get_covariance_matrix <- function(distance_type, dims) {
+  infile <- paste0(data_dir, "covariance_matrix.bin")
+  con <- file(infile, "rb")
+  dim <- readBin(con, "integer", 2)
+  Mat <- matrix( readBin(con, "numeric", prod(dim)), dim[1], dim[2])
+  close(con)
+  
+  return(Mat)
+}
+
 # Return n random norms
 random_norms <- function(n) {
   return(sample(norms$Word, n))

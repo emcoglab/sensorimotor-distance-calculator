@@ -6,6 +6,7 @@ library(markdown)
 library(purrr)
 library(readr)
 library(rdist)
+library(ICSNP) # for pair.diff(), C implementation
 library(shiny)
 library(shinythemes)
 library(shinycssloaders)
