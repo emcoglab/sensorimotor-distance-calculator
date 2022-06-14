@@ -1,5 +1,10 @@
 ### News and updates
 
+#### 2022-06-14: v0.9 changes
+
+- Added Mahalanobis distance as an option to the app.
+- Included changelog with a few historical changes.
+
 #### 2021-08-19: v0.8.6 changes
 
 - Fixed a bug which caused some norms to be unavailable if they had a trailing space.
