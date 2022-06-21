@@ -1,10 +1,10 @@
 ### What this is
 
 More information about the Sensorimotor Disance Calculator can be found in the [associated publication](#TODO).
-Please cite this if you use the tool in your research.
 <blockquote>
     "Wingfield, C. & Connell, L. (2021) Sensorimotor distance: a fully grounded semantic similarity measure for nearly 800 million concept pairs. (Under review)."
 </blockquote>
+Please cite this if you use the tool in your research.
 
 The **Sensorimotor Distance Calculator** is a tool to calculate semantic distance between words/concepts in an 11-dimension sensorimotor space, comprising six perceptual modalities (touch, hearing, smell, taste, vision, and interoception) and five action effectors (mouth/throat, hand/arm, foot/leg, head excluding mouth/throat, and torso).
 
