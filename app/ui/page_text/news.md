@@ -1,5 +1,9 @@
 ### News and updates
 
+#### 2022-06-14: **v0.9 changes**
+
+- Added Mahalanobis distance as an option to the app.
+
 #### 2022-06-21: **v0.8.7 changes**
 
 - Added a page for news and updates.
