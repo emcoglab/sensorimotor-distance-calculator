@@ -9,9 +9,15 @@ get_mds_positions_for_words <- function(words, distance_type, max_words = Inf) {
   if (length(words) > max_words) { words = words[1:max_words] }
 
   data_matrix <- matrix_for_words(words)
-  d <- distance_matrix(data_matrix, data_matrix, distance_type)
+  
+  if (distance_type == "mahalanobis") {
+    d <- distance_matrix(data_matrix, data_matrix, distance_type, covariance_matrix = get_covariance_matrix())
+  }
+  else {
+    d <- distance_matrix(data_matrix, data_matrix, distance_type)
+  }
 
-  if (distance_type %in% c("euclidean", "minkowski3")) {
+  if (distance_type %in% c("euclidean", "minkowski3", "mahalanobis")) {
     # Use metric MDS
     points <- cmdscale(d)
   }
