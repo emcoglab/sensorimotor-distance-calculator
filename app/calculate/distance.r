@@ -27,24 +27,6 @@ distance_col_name <- function(distance_type) {
   return(name)
 }
 
-cdist_mahalanobis <-function(X, covariance_matrix) {
-  # Thanks https://stats.stackexchange.com/a/65767/36178
-  
-  invCov = solve(covariance_matrix)
-  svds = svd(invCov)
-  invCovSqr = svds$u %*% diag(sqrt(svds$d)) %*% t(svds$u)
-  
-  Q = data %*% invCovSqr
-  
-  # Calculate distances
-  # pair.diff() calculates the n(n-1)/2 element-by-element
-  # pairwise differences between each row of the input matrix
-  sqrDiffs = pair.diff(Q)^2
-  distVec = rowSums(sqrDiffs)
-  
-  return(squareform(distVec))
-}
-
 # Computes a distance matrix from two data matrices
 distance_matrix <- function(matrix_left, matrix_right, distance_type, covariance_matrix = NULL) {
   if (distance_type == "minkowski3") {
@@ -64,7 +46,8 @@ distance_matrix <- function(matrix_left, matrix_right, distance_type, covariance
     distances <- cdist(matrix_left, matrix_right, metric="correlation") ^ 2 * 2
   }
   else if(distance_type == "mahalanobis") {
-    distances <- cdist_mahalanobis(X = matrix_left - matrix_right, covariance_matrix = covariance_matrix)
+    invCov = solve(covariance_matrix)
+    distances <- cdist(matrix_left, matrix_right, metric=function(x, y) {sqrt(t(x-y) %*% invCov %*% (x-y))})
   }
   else {
     stop("Unsupported distance type")

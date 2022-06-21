@@ -12,7 +12,7 @@ def _compute_covariance_matrix(input_matrix) -> array:
     return cov(input_matrix)
 
 
-def save_covariance_matrix(input_matrix):
+def save_covariance_matrix(input_matrix) -> array:
     """input_matrix.shape = (dims, observations)"""
     path = Path(Config().sensorimotor_app_data_location, cov_matrix_name).with_suffix('.npy')
     covariance_matrix = _compute_covariance_matrix(input_matrix)
@@ -26,6 +26,7 @@ def save_covariance_matrix(input_matrix):
                 comment="Covariance matrix",
                 field="real",
                 symmetry="general")
+    return covariance_matrix
 
 
 def load_covariance_matrix() -> array:
