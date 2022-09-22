@@ -1,5 +1,10 @@
 ### News and updates
 
+#### 2022-09-21: **v1.0 changes**
+
+- The associated paper has been [published](https://doi.org/10.3758/s13428-022-01965-7) in Behavior Research Methods!
+  - Citations and references updated accordingly.
+
 #### 2022-06-14: **v0.9 changes**
 
 - Added Mahalanobis distance as an option to the app.
