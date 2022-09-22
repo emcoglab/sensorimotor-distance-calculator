@@ -1,0 +1,14 @@
+Possible improvements
+[ ] New "info" tab to explain distances
+[ ] ununicoded quotes on neighbours tab
+
+Future features
+[ ] option to label visualisation lines with distances
+[ ] Show shepard plot for MDS
+[ ] filter neighbours by brysbaert-prevalence
+[ ] Button to move from visualise to symmetric distance matrix, copying info to get 
+    distances... or just a button to download distance matrix for the current 
+    visualisation
+
+Known issues
+[~] None
